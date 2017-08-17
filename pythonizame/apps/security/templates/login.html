@@ -1,0 +1,38 @@
+{% extends "base_security.html" %}
+{% load static %}
+{% block container %}
+    <div class="container">
+        <div class="card card-container" style="padding-top: 20px">
+            <a href="/"><img src="{% static 'app/img/logo.png' %}" style="display: block;margin:auto" alt="pythoniza.me" title="Regresar al inicio" width="100px" height="100px"/></a>
+            <br/>
+            <p class="lead text-center">Login Pythonízame</p>
+            <div>
+                <form action="." class="form-signin" method="post">
+                {% for field in form %}
+                    <label for="{{ field.id }}"> {{ field.label }}</label><br>
+                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                        {% for error  in field.errors %}
+                            <div style="margin-top: -15px">
+                                <small style="color:red">{{ error }}</small>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+                {% csrf_token %}
+                <br>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Login</button>
+            </form>
+            </div>
+
+            <a href="{% url 'security:recover_password' %}" style="float:left" class="forgot-password">
+                ¿Olvidaste tu contraseña?
+            </a>
+            <a href="{% url 'security:register' %}" class="forgot-password" style="float: right">
+                Registrarme
+            </a>
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+{% endblock container %}

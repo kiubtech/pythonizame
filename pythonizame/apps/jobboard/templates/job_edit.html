@@ -1,0 +1,164 @@
+{% extends 'base_blog.html' %}
+{% block skin %}skin-green{% endblock %}
+{% block title %}Jobs {% endblock title %}
+{% load static i18n widget_tweaks %}
+{% block content %}
+    <div class="col-xs-12" id="detail_article">
+        <div class="col-xs-12">
+            <h2>{% trans 'Editar Job' %}
+                <small class="pull-right">
+                    {% if job.status == 0 %}
+                        {% trans 'Rechazado' %}
+                    {% elif job.status == 1 %}
+                        {% trans 'Aprobado' %}
+                    {% elif job.status == 2 %}
+                        {% trans 'Borrador' %}
+                    {% elif job.status == 3 %}
+                        {% trans 'En revisión' %}
+                    {% endif %}
+                </small>
+            </h2>
+            <hr>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">{{ form.title.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                    {{ form.title | add_class:"form-control" | attr:"placeholder: Desarrollador FrontEnd"|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.title | add_class:"form-control" | attr:"placeholder: Desarrollador FrontEnd"}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.description.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                        {{ form.description | add_class:"form-control"|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.description | add_class:"form-control"}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.work_schedule.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                    {{ form.work_schedule | add_class:"form-control"|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.work_schedule | add_class:"form-control"}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.categories.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                    {{ form.categories | add_class:"form-control select2"|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.categories | add_class:"form-control select2"}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.salary.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                    {{ form.salary | add_class:"form-control" | attr:"placeholder:$1500 USD"|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.salary | add_class:"form-control" | attr:"placeholder:$1500 USD"}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.company_name.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                    {{ form.company_name | add_class:"form-control" | attr:"placeholder:Mi empresa global"|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.company_name | add_class:"form-control" | attr:"placeholder:Mi empresa global"}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.website.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                    {{ form.website | add_class:"form-control" | attr:"placeholder:wwww.miempresa.com"|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.website | add_class:"form-control" | attr:"placeholder:wwww.miempresa.com"}}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="">{{ form.address.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                        {{ form.address | add_class:"form-control" | attr:"placeholder:Ej. calle 15 entre 16 Altavista Yucatán "|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.address | add_class:"form-control" | attr:"placeholder:Ej. calle 15 entre 16 Altavista Yucatán "}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.country.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                    {{ form.country | add_class:"form-control select2"|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.country | add_class:"form-control select2"}}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.contact_email.label }}</label>
+                    {% if job.status == 1 or job.status == 3 %}
+                    {{ form.contact_email | add_class:"form-control" | attr:"placeholder: info@miempresa.com "|attr:"disabled:disabled"}}
+                    {% else %}
+                        {{ form.contact_email | add_class:"form-control" | attr:"placeholder: info@miempresa.com "}}
+                    {% endif %}
+                </div>
+                <div class="checkbox">
+                    <label>
+                        {% if job.status == 1 or job.status == 3 %}
+                            <i class="fa fa-check"></i>
+                        {% else %}
+                            {{ form.remote_working }}
+                        {% endif %}
+
+                    {{ form.remote_working.label }}
+                    </label>
+                </div>
+                <br>
+            <div class="form-group">
+                <a href="{% url 'jobboard:my-list' %}" class="btn btn-default">{% trans 'Regresar' %}</a>
+                {% if job.status == 2 or job.status == 0 %}
+                    <button class="btn btn-primary">{% trans 'Actualizar' %}</button>
+                {% endif %}
+            </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+{% block custom_aside_main %}
+
+
+    {% include 'includes/buttonsJob.html' with add_job=False %}
+
+
+    <div class="col-xs-12 no-padding" style="padding:0;overflow-x:hidden ">
+        {% include 'includes/fb_widget.html' %}
+    </div>
+
+
+       <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <br>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+{% endblock custom_aside_main %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'PyAdminLTE/plugins/select2/select2.min.css' %}">
+{% endblock style %}
+{% block scripts %}
+    <script src="{% static 'PyAdminLTE/plugins/select2/select2.full.min.js' %}"></script>
+<script>
+$(function () {
+    $('.select2').select2();
+});
+</script>
+{% endblock scripts %}

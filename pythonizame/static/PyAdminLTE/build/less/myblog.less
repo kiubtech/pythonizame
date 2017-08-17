@@ -1,0 +1,115 @@
+//para que quitemos el espacio del aside left
+.content-wrapper,
+.right-side,
+.main-footer {
+  margin-left: 0 !important;
+}
+
+
+.layout-boxed{
+  background:@boxed-bg;
+}
+
+
+
+#detail_article {
+  background: #FEFEFE;
+  //box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+  margin-bottom: 10px;
+  padding-left: 0;
+  padding-right: 0;
+  .tituloDetail {
+    position: absolute;
+    top: 0;
+    font-size: 42px;
+    width: auto;
+    margin: 16px;
+    color: #eeeeee;
+    text-shadow: -1px -1px #cccccc;
+    text-shadow: 0px 1px 1px #000;
+  }
+
+  #post_img {
+    padding: 0 !important;
+    margin-bottom: 10px;
+    height: 400px;
+    overflow-y: hidden;
+    .background-size(120% 120%);
+    background-position: center center !important;
+    background-attachment: fixed;
+    background-repeat: no-repeat !important;
+    a:hover,a:visited,a{
+      color: white !important;
+    }
+    .author_image {
+      position: absolute;
+      top: 370px;
+      color: white !important;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      padding-left: 4px;
+      padding-right: 4px;
+      -webkit-text-fill-color: white;
+      -webkit-text-stroke-color: gray;
+      -webkit-text-stroke-width: 0.3px;
+    }
+    img {
+      margin: 0;
+    }
+  }
+}
+
+.background-size(@background-size) {
+  -webkit-background-size: @background-size !important;
+  -moz-background-size: @background-size !important;
+  -o-background-size: @background-size !important;
+  background-size: @background-size !important;
+}
+
+.box-footer-post{
+  height: 130px;
+}
+
+/*Swiper carousel*/
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.swiper-slide {
+  font-size: 18px;
+  color: #fff;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  //padding: 40px 60px;
+  a,a:visited,a:hover{
+    color: white !important;
+  }
+}
+
+.overlay-carousel {
+  padding: 40px 60px;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  width: 100%;
+  height: 100%
+}
+
+.overlay-carousel .title {
+  font-size: 41px;
+  font-weight: 300;
+}
+
+.overlay-carousel .text {
+  font-size: 14px;
+  max-width: 400px;
+  line-height: 1.3;
+  font-weight: bold;
+}
+
+.swiper-container {
+  height: 400px;
+}
+
+/*Swiper carousel*/

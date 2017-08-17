@@ -1,0 +1,161 @@
+{% extends 'base_blog.html' %}
+{% block skin %}skin-green{% endblock %}
+{% block title %}Jobs {% endblock title %}
+{% load static i18n %}
+
+
+
+{% block custom_aside_main %}
+
+
+    {% include 'includes/buttonsJob.html' with add_job=True %}
+
+
+    <div class="col-xs-12 no-padding" style="padding:0;overflow-x:hidden ">
+        {% include 'includes/fb_widget.html' %}
+    </div>
+
+
+       <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <br>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+{% endblock custom_aside_main %}
+
+{% block main-swipe %}
+{% endblock main-swipe %}
+{% block content %}
+    <div class="col-xs-12">
+        <div class="box box-widget">
+            <div class="box-body">
+                <h3>{% trans 'Mis empleos' %}</h3>
+                <hr>
+                {% if object_list %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th width="15%">{% trans 'Fecha' %}</th>
+                        <th>{% trans 'Título' %}</th>
+                        <th width="15%">{% trans 'Visualizaciones' %}</th>
+                        <th width="15%">{% trans 'Estatus' %}</th>
+                        <th width="15%">{% trans '' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for element in object_list %}
+                        <tr>
+                            <td>{{ element.timestamp|date:"d-m-Y" }}</td>
+                            <td>{{ element.title }}</td>
+                            <td>{{ element.num_of_views }}</td>
+                            <td>
+                                {% if element.status == 0 %}
+                                    Rechazado
+                                {% elif element.status == 1 %}
+                                    Autorizado
+                                {% elif element.status == 2 %}
+                                    Borrador
+                                {% elif element.status == 3 %}
+                                    En Revisión
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-success btn-flat btn-sm">{% trans 'Acciones' %}</button>
+                                    <button type="button" class="btn btn-success btn-flat btn-sm dropdown-toggle"
+                                            data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{% url 'jobboard:edit' element.id %}">{% trans 'Editar' %}</a></li>
+                                        {% if element.status == 0 or element.status == 2 %}
+                                        <li><a href="#" class="revision_job" data-url="{% url 'jobboard:change-to-review' element.id %}" data-toggle="modal" data-target="#modalSendRevision" >{% trans 'Enviar a revisión' %}</a></li>
+                                        {% endif %}
+                                        <li class="divider"></li>
+                                        <li><a href="#" class="delete_job" data-url="{% url 'jobboard:delete' element.id %}" data-toggle="modal" data-target="#modalDeleteJob">{% trans 'Elimnar' %}</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                    <!-- Paginación de elementos -->
+                    <div class="row" style="margin-bottom: 20px; margin-top: 20px">
+                        <div class="col-xs-12">
+                            <section id="navigationBlog" class="col-xs-12">
+                                {% if page_obj.has_next %}
+                                    <a href="{% url 'jobboard:my-list' %}?page={{ page_obj.next_page_number }}"
+                                       class="btn btn-primary pull-left">
+                                        <i class="fa fa-arrow-circle-left"></i> {% trans 'Anteriores' %} </a>
+                                {% endif %}
+                                {% if page_obj.has_previous %}
+                                    <a href="{% url 'jobboard:my-list' %}?page={{ page_obj.previous_page_number }}"
+                                       class="btn btn-primary pull-right"> {% trans 'Recientes' %}
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                    </a>
+                                {% endif %}
+                            </section>
+                        </div>
+                    </div><!-- END Paginación de elementos -->
+                 {% else %}
+                    <p class="text-center text-muted">
+                         <i class="fa fa-frown-o fa-4x"></i>
+                        <br>
+                        <b>{% trans 'Aun no cuentas con Jobs registrados' %}</b>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalDeleteJob" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p class="lead text-center">{% trans '¿Estas seguro de eliminar tu job?' %}</p>
+                <p class="text-center">
+                    <button type="button" data-dismiss="modal" class="btn btn-default btn-flat btn-lg">{% trans 'Cancelar' %}</button>
+                    <a href="" id="btnDeleteJob" class="btn btn-primary btn-flat btn-lg">{% trans 'Aceptar' %}</a>
+                </p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+    <div class="modal fade" id="modalSendRevision" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p class="lead text-center">{% trans '¿Estas seguro de mandar a revisión tu job?' %}</p>
+                <p class="text-center">
+                    <button type="button" data-dismiss="modal" class="btn btn-default btn-flat btn-lg">{% trans 'Cancelar' %}</button>
+                    <a href="" id="btnRevJob" class="btn btn-primary btn-flat btn-lg">{% trans 'Aceptar' %}</a>
+                </p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        $(document).on('ready',function(){
+           pythonizame.jobs_mylist();
+        });
+    </script>
+{% endblock scripts %}

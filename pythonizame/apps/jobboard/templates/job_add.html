@@ -1,0 +1,106 @@
+{% extends 'base_blog.html' %}
+{% block skin %}skin-green{% endblock %}
+{% block title %}Jobs {% endblock title %}
+{% load static i18n widget_tweaks %}
+{% block content %}
+    <div class="col-xs-12" id="detail_article">
+        <div class="col-xs-12">
+            <h2>Agregar nuevo Job</h2>
+            <hr>
+            <form action="." method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">{{ form.title.label }}</label>
+                    {{ form.title | add_class:"form-control" | attr:"placeholder: Desarrollador FrontEnd "}}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.description.label }}</label>
+                    {{ form.description | add_class:"form-control"}}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.work_schedule.label }}</label>
+                    {{ form.work_schedule | add_class:"form-control"}}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.categories.label }}</label>
+                    {{ form.categories | add_class:"form-control select2"}}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.salary.label }}</label>
+                    {{ form.salary | add_class:"form-control" | attr:"placeholder: Ej1. $1500 USD | Ej2. A convenir"}}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.company_name.label }}</label>
+                    {{ form.company_name | add_class:"form-control" | attr:"placeholder:Mi empresa global"}}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.website.label }}</label>
+                    {{ form.website | add_class:"form-control" | attr:"placeholder:http://wwww.miempresa.com"}}
+                </div>
+
+                <div class="form-group">
+                    <label for="">{{ form.address.label }}</label>
+                    {{ form.address | add_class:"form-control" | attr:"placeholder:Ej. calle 15 entre 16 Altavista Yucatán "}}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.country.label }}</label>
+                    {{ form.country | add_class:"form-control select2"}}
+                </div>
+                <div class="form-group">
+                    <label for="">{{ form.contact_email.label }}</label>
+                    {{ form.contact_email | add_class:"form-control" | attr:"placeholder: info@miempresa.com "}}
+                </div>
+
+
+                <div class="checkbox">
+                    <label>
+                       {{ form.remote_working }}
+                    {{ form.remote_working.label }}
+                    </label>
+                </div>
+                <div class="form-group">
+                   <button class="btn btn-primary">Guardar</button>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+{% block custom_aside_main %}
+
+
+    {% include 'includes/buttonsJob.html' with ejemplo='Hola' %}
+
+
+    <div class="col-xs-12 no-padding" style="padding:0;overflow-x:hidden ">
+        {% include 'includes/fb_widget.html' %}
+    </div>
+
+
+       <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <br>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+{% endblock custom_aside_main %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'PyAdminLTE/plugins/select2/select2.min.css' %}">
+{% endblock style %}
+{% block scripts %}
+    <script src="{% static 'PyAdminLTE/plugins/select2/select2.full.min.js' %}"></script>
+<script>
+$(function () {
+    $('.select2').select2();
+});
+</script>
+{% endblock scripts %}

@@ -1,0 +1,30 @@
+{% load static i18n %}
+
+{% if user.is_authenticated %}
+{% if add_job %}
+<a href="{% url 'jobboard:add' %}"  class="btn btn-success btn-flat btn-block"> <i class="fa fa-plus"></i> &nbsp; {% trans 'Nuevo empleo' %}</a>
+{% endif %}
+<a href="{% url 'jobboard:my-list' %}" class="btn btn-success btn-flat btn-block"> <i class="fa fa-suitcase"></i> &nbsp;{% trans 'Mis empleos' %}</a>
+{% else %}
+
+<a href="#" data-toggle="modal" data-target="#modalJob" class="btn btn-success btn-flat btn-block">{% trans 'Nuevo empleo' %}</a>
+
+{% endif %}
+
+
+<div class="modal fade" id="modalJob" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="{% static 'app/img/logo.png' %}" alt="" width="40%">
+                <p class="lead text-center">Hola! necesitamos saber quien eres, por favor ingresa.</p>
+                <p class="text-center">
+                    <a href="{% url 'security:login' %}" class="btn btn-primary btn-flat btn-lg">Login</a>
+                </p>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<br>

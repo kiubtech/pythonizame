@@ -1,0 +1,11 @@
+{
+  "name": "Pythoniza.me",
+  "version": "0.0.1",
+  "description": "Aplicación Pythonizame",
+  "dependencies": {
+    "Swiper": "swiper#~3.1.5",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1"
+  }
+}

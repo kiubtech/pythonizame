@@ -1,0 +1,9 @@
+{% extends 'base_account.html' %}
+{% block title %} Bienvenido! {% endblock title %}
+{% block content %}
+    <div id="welcome">
+        <h1>Bienvenido {{ new_user.username }}!</h1>
+        <p> Ahora podrás disfrutar de todos los beneficios de formar parte de esta gran comunidad!</p>
+        <a href="/"> Comenzar! </a>
+    </div>
+{% endblock content %}

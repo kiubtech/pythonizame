@@ -1,0 +1,103 @@
+{% load  static %}
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="es"> <!--<![endif]-->
+<head>
+    <title>{% block title %} {% endblock title %} | Pythonízame</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">
+    {% include 'includes/metasGenerico.html' %}
+<link rel="shortcut icon" href="{% static 'app/img/favicon_.png' %}">
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{% static 'app/libs/bootstrap/css/bootstrapPaper.min.css' %}">
+    <link rel="stylesheet" href="{% static 'app/libs/font-awesome-4.3.0/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" href="{% static 'app/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/pyme.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/blog.css' %}">
+    <link href="{% static 'app/libs/alertify/themes/alertify.bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'app/libs/alertify/themes/alertify.core.css' %}" rel="stylesheet">
+    <link href="{% static 'app/libs/alertify/themes/alertify.default.css' %}" rel="stylesheet">
+    {% block style %}
+    {% endblock style %}
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+{% include 'includes/navbar_header.html' %}
+<div class="blog container-fluid">
+    <!-- ******HEADER****** -->
+    <!-- ******BLOG LIST****** -->
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 card_content sombraCard"  style="background:white">
+                {% block content %}
+                {#  Aqui contenido principal #}
+                {% endblock content %}
+        </div><!--//content-->
+    </div><!--//blog-->
+</div><!--//container-fluid-->
+
+
+<!-- Modal logros-->
+<div class="modal fade" id="modalLogro" tabindex="-1" data-backdrop="static"
+   data-keyboard="false" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+              <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center" id="myModalLabel">Felicidades!!!</h4>
+      </div>
+      <div class="modal-body text-center">
+          <p>Felicidades has conseguido los siguientes logros:</p>
+            <ul class="list-inline">
+                {% for logro in pending_achievements %}
+                    <li><img src="{{ logro.achievement.thumbnail }}" class="img-circle" width="80px" height="80px" alt=""/><br/>{{ logro.achievement.name }}</li>
+                {% endfor %}
+        </ul>
+      </div>
+      <div class="modal-footer" class="col-xs-12">
+        <button type="button" class="btn btn-primary"  data-dismiss="modal">Entendido</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Javascript -->
+
+<script src="{% static 'app/libs/jquery/jquery-2.1.4.min.js' %}"></script>
+<script src="{% static 'app/libs/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'app/libs/DjangoAjax/DjangoAjax.js' %}"></script>
+<script src="{% static 'app/js/main.js' %}"></script>
+<script src="{% static 'app/libs/alertify/alertify.min.js' %}"></script>
+{% block scripts %}
+{% endblock scripts %}
+
+{% include 'includes/analitycs.html' %}
+<script>
+    {% if pending_achievements %}
+        $('#modalLogro').modal('show');
+    {% endif %}
+$(document).on('ready',function(){
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                alertify.error('{{ message }}');
+            {% else %}
+                alertify.success('{{ message }}');
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+});
+</script>
+</body>
+<!-- Javascript -->
+
+
+</html>
+

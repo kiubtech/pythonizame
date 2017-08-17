@@ -1,0 +1,42 @@
+{% extends "base_security.html" %}
+{% load static %}
+{% block title %}
+    Solicitar Token
+{% endblock title %}
+{% block container %}
+    <div class="container">
+        <div class="card card-container">
+
+        {% if mensaje %}
+            <p id="profile-name" class="profile-name-card">{{ mensaje }}</p>
+            <p class="text-center">Estas listo para disfrutar de los beneficios de la plataforma :)</p>
+        {% else %}
+            <p id="profile-name" class="profile-name-card">Solicitar nuevo token</p>
+            <form action="." class="form-signin" method="post">
+                {% for field in form %}
+                          <label for="{{ field.id }}"> {{ field.label }}</label><br>
+                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                          {{ field }}
+                    </div>
+                          {% if field.errors %}
+                              {% for error  in field.errors %}
+                                  <div style="margin-top: -15px">
+                                      <small style="color:red">{{ error }}</small>
+                                  </div>
+                            {% endfor %}
+                          {% endif %}
+                  {% endfor %}
+                {% csrf_token %}
+            <br>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Solicitar</button>
+            </form>
+        {% endif %}
+            <a href="{% url 'security:login' %}" style="float:left" class="forgot-password">
+                Login
+            </a>
+            <a href="{% url 'security:register' %}" class="forgot-password" style="float: right">
+                Registrarme
+            </a>
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+{% endblock container %}

@@ -1,0 +1,186 @@
+{% extends 'base_blog.html' %}
+{% load static %}
+{% block title %} Blog {% endblock title %}
+{% block main-swipe %}
+{% endblock main-swipe %}
+{% block content %}
+    <div class="col-xs-12" style="padding-left: 0;padding-right: 0;height: 100px;">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- post_detalle1 -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="5925055247"
+             data-ad-format="auto"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+    </div><!-- anuncio -->
+
+    <div class="row">
+        {% for post in object_list %}
+
+
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="box box-widget widget-user">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <a href="{% url 'blog:post_detail' post.slug %}">
+                        <div class="widget-user-header bg-black"
+                             style="background: url({{ post.pin_image_thumbnail }}) center center;">
+                            <h3 class="widget-user-username">{{ post.title|capfirst }}</h3>
+                        </div>
+                    </a>
+                    <div class="box-footer box-footer-post">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p>{{ post.abstract | truncatechars:80 }}</p>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="card-action">
+                                        <span class="pull-left">
+                                            <i class="{% if post.like %}fa fa-heart  {% else %}fa fa-heart-o {% endif %}heart{{ post.id }}"></i>
+                                            <small class="num_likes{{ post.id }}"
+                                                   style="font-size: 13px">{{ post.num_likes }}</small>
+                                        </span>
+                                    <span class="pull-right">{{ post.publication_date | date:"D d M Y" }}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <div class="row">
+        <section id="navigationBlog" class="col-xs-12">
+
+            {% if page_obj.has_next %}
+                <a href="/page/{{ page_obj.next_page_number }}/{% if queryset %}?q={{ queryset }}{% endif %}"
+                   class="btn btn-primary pull-left">
+                <i
+                        class="fa fa-arrow-circle-left"></i>
+                    Anteriores  </a>
+            {% endif %}
+            {% if page_obj.has_previous %}
+                <a href="/page/{{ page_obj.previous_page_number }}/{% if queryset %}?q={{ queryset }}{% endif %}"
+                   class="btn btn-primary pull-right">  Recientes
+                <i
+                        class="fa fa-arrow-circle-right"></i>
+                </a>
+            {% endif %}
+        </section>
+    </div>
+    <br>
+
+{% endblock content %}
+{% block aside_main %}
+
+    <form action="." method="get">
+
+        <label for="">&nbsp;</label>
+        <div class="form-group">
+
+            <div class="input-group">
+                <input type="text" name="q" value="{% if queryset %}{{ queryset }}{% endif %}" placeholder="Buscar.."
+                       class="form-control">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info"><i class="fa fa-search"></i></button>
+                    </span>
+            </div>
+
+
+        </div>
+
+    </form>
+
+
+
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Apóyanos</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="4FCV6MTFGPBY8">
+                <input type="image" src="https://www.paypalobjects.com/es_XC/MX/i/btn/btn_donateCC_LG.gif"
+                       border="0"
+                       name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1"
+                     height="1">
+            </form>
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer text-center">
+            <a href="/faq-donaciones/">¿Por que donar?</a>
+        </div>
+        <!-- /.box-footer -->
+    </div>
+    <!--/.box -->
+
+    <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-yellow">
+            <h3 class=" ">Categorías</h3>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+                {% for category in categories %}
+                    <li><a href="{% url 'blog:by_category' category.slug %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Síguenos en nuestras redes sociales</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            {% include 'includes/div_social.html' %}
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+{% endblock aside_main %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'app/libs/Swiper/dists/css/swiper.min.css' %}"/>
+{% endblock style %}
+{% block scripts %}
+    <script src="{% static 'app/libs/Swiper/dists/js/swiper.jquery.min.js' %}"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            spaceBetween: 30,
+            loop: true
+        });
+    </script>
+{% endblock %}

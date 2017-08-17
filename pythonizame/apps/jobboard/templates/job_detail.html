@@ -1,0 +1,166 @@
+{% extends 'base_blog.html' %}
+{% load static thumbnail %}
+{% block skin %}skin-green{% endblock %}
+{% block title %} {{ job.title }}{% endblock title %}
+{% block metas %}
+    <meta name="description" content="{{ job.description }}">
+    <meta name="keywords" itemprop="keywords" content="{{ job.title }}, {{ job.website }},{{ job.compny_name }}">
+    <meta property="og:locale" content="es_MX"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:image" content="{% if config.logo %}{{ config.logo.url }}{% endif %}">
+    <meta property="og:title" content="{{ job.title }}"/>
+    <meta property="og:description" content="{{ post.description }}"/>
+    <meta property="og:url" content="{% url 'jobboard:detail' job.id %}"/>
+    <meta property="og:site_name" content="Pythonízame Jobs  | {{ job.title }}"/>
+{% endblock metas %}
+{% block style %}
+    <style>
+        h5.subtitulo{
+            margin-bottom: 3px
+        }
+    </style>
+{% endblock style %}
+
+{% block content %}
+    <div class="" id="detail_article">
+
+        <div class="post_content" style="padding: 20px">
+        <h2 class="pull-left">{{ job.title }}</h2>
+        <img src="{{ job.country.flag }}" class="pull-right" style="margin-top: 20px;width: 20px" title="{{ job.country.name }}">
+
+        <div class="clearfix"></div>
+        <a href="{{ job.website }}"> <i class="fa fa-building"></i> {{ job.company_name }}</a>
+        <small>- Publicado el: {{ job.approval_datetime }}</small>
+        <div class="clearfix"></div>
+            <hr>
+        <p>{{ job.description|linebreaks }}</p>
+            <br>
+
+        <h5 class="lead subtitulo"><b> <i class="fa fa-money"></i>  Salario</b></h5>
+        <p>{{ job.salary}}</p>
+            <br>
+
+        <h5 class="lead subtitulo"><b> <i class="fa fa-clock-o"></i> Horario</b></h5>
+        <p>{% if job.work_schedule == 1 %}Tiempo completo{% else %}Tiempo Parcial{% endif %}</p>
+            <br>
+
+        {% if job.remote_working %}
+        <h5 class="lead subtitulo"><b> <i class="fa fa-cloud"></i> Puede ser remoto <i class="fa fa-check text-success"></i> </b></h5>
+            <br>
+        {% endif %}
+
+
+        <h5 class="lead subtitulo"><b> <i class="fa fa-at"></i> Contacto</b></h5>
+        <p>{{ job.contact_email }}</p>
+            <br>
+
+
+        <h5 class="lead subtitulo"><b> <i class="fa fa-map-marker"></i> ¿Donde?</b></h5>
+        <p>{{ job.address }}</p>
+            <br>
+
+        <h5 class="lead subtitulo"><b> <i class="fa fa-tags"></i> Categorías</b></h5>
+        <p class="text-bold">{% for category in job.categories.all %} {{ category.name }} {% if not  forloop.last %}, {% endif %} {% endfor %}</p>
+            <br>
+
+
+        </div>
+
+
+
+    </div>
+
+{% endblock content %}
+
+{% block custom_aside_main %}
+
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Apóyanos</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="4FCV6MTFGPBY8">
+                <input type="image" src="https://www.paypalobjects.com/es_XC/MX/i/btn/btn_donateCC_LG.gif"
+                       border="0"
+                       name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1"
+                     height="1">
+            </form>
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer text-center">
+            <a href="/faq-donaciones/">¿Por que donar?</a>
+        </div>
+        <!-- /.box-footer -->
+    </div>
+    <!--/.box -->
+
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Síguenos en nuestras redes sociales</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            {% include 'includes/div_social.html' %}
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="col-xs-12 no-padding" style="padding:0;overflow-x:hidden ">
+        {% include 'includes/fb_widget.html' %}
+    </div>
+
+
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden;margin-top: 10px ">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- aside_blog2 -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="1302990042"
+             data-ad-format="auto"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+{% endblock custom_aside_main %}
+
+{% block scripts %}
+    {% if config.enable_disqus %}
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = '{{ config.disqus_shortname }}';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments
+            powered by Disqus.</a></noscript>
+    {% endif %}
+{% endblock scripts %}

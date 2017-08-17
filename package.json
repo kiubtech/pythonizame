@@ -1,0 +1,16 @@
+{
+  "name": "pythonizame-app",
+  "version": "0.0.1",
+  "description": "Blog de tecnología Python",
+  "bugs": {
+    "url": "https://pythoniza.me",
+    "email": "casper088@gmail.com"
+  },
+  "license": "MIT",
+  "author": "Alex Dzul, Gaspar Dzul",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "wiredep": "^2.2.2"
+  }
+}

@@ -1,0 +1,20 @@
+<div style="font-size: 30px" class="text-center items-social">
+    {% if config.facebook %}
+        <a href="{{ config.facebook }}" target="_blank" style="color: #01579B"><i class="fa fa-facebook-f"></i></a>
+    {% endif %}
+    {% if config.instagram %}
+        <a href="{{ config.instagram }}" style="color: #4E342E" target="_blank"><i
+                class="fa fa-instagram"></i></a>
+    {% endif %}
+    {% if config.pinterest %}
+        <a href="{{ config.pinterest }}" style="color: red" target="_blank"><i
+                class="fa fa-pinterest"></i></a>
+    {% endif %}
+    {% if config.twitter %}
+        <a href="{{ config.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
+    {% endif %}
+    {% if config.gplus %}
+        <a href="{{ config.gplus }}" style="color: #F44336" target="_blank"><i
+                class="fa fa-google-plus"></i></a>
+    {% endif %}
+</div>

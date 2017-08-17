@@ -1,0 +1,335 @@
+{% extends 'base_account.html' %}
+{% load static i18n %}
+{% load thumbnail %}
+{% block title %} Perfil de {{ the_user.username }} {% endblock title %}
+{% block metas %}
+    <meta name="description" content="Pythonizame | perfil de usuario de {{ the_user.first_name }} {{ the_user.last_name }}">
+    <meta property="og:locale" content="es_MX"/>
+    <meta property="og:type" content="website"/>
+    {% if the_user.userprofile.image %}
+        <meta property="og:image" content="{{ the_user.userprofile.image.url }}">
+    {% else %}
+        <meta property="og:image" content="{% static 'app/img/default.gif' %}">
+    {% endif %}
+    <meta property="og:title" content="Pythonízame - perfil de usuario de {{ the_user.first_name }} {{ the_user.last_name }}"/>
+    <meta property="og:description" content="{{ the_user.profile.about_me }}"/>
+    <meta property="og:url" content="{% url 'account:profile' the_user.username %}"/>
+    <meta property="og:site_name" content="Pythonízame | perfil"/>
+{% endblock metas %}
+{% block style %}
+    <link href="{% static 'PyAdminLTE/plugins/select2/select2.css' %}" rel="stylesheet" />
+    <style>
+        /***
+Bootstrap Line Tabs by @keenthemes
+A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
+Licensed under MIT
+***/
+
+/* Tabs panel */
+.tabbable-panel {
+  border:1px solid #eee;
+  padding: 10px;
+}
+
+/* Default mode */
+.tabbable-line > .nav-tabs {
+  border: none;
+  margin: 0px;
+}
+.tabbable-line > .nav-tabs > li {
+  margin-right: 2px;
+}
+.tabbable-line > .nav-tabs > li > a {
+  border: 0;
+  margin-right: 0;
+  color: #737373;
+}
+.tabbable-line > .nav-tabs > li > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
+  border-bottom: 4px solid #BBDEFB;
+}
+.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: #333333;
+}
+.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+.tabbable-line > .nav-tabs > li.active {
+  border-bottom: 4px solid #1976D2;
+  position: relative;
+}
+.tabbable-line > .nav-tabs > li.active > a {
+  border: 0;
+  color: #333333;
+}
+.tabbable-line > .nav-tabs > li.active > a > i {
+  color: #404040;
+}
+.tabbable-line > .tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+.portlet .tabbable-line > .tab-content {
+  padding-bottom: 0;
+}
+
+/* Below tabs mode */
+
+.tabbable-line.tabs-below > .nav-tabs > li {
+  border-top: 4px solid transparent;
+}
+.tabbable-line.tabs-below > .nav-tabs > li > a {
+  margin-top: 0;
+}
+.tabbable-line.tabs-below > .nav-tabs > li:hover {
+  border-bottom: 0;
+  border-top: 4px solid #fbcdcf;
+}
+.tabbable-line.tabs-below > .nav-tabs > li.active {
+  margin-bottom: -2px;
+  border-bottom: 0;
+  border-top: 4px solid #f3565d;
+}
+.tabbable-line.tabs-below > .tab-content {
+  margin-top: -10px;
+  border-top: 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+    </style>
+{% endblock style %}
+{% block content %}
+
+    <div class="col-md-4">
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-blue">
+              <div class="widget-user-image">
+                  {% if the_user.userprofile.image %}
+                <img class="img-circle" src="{{ the_user.userprofile.image.url }}" style="width: 65px; height: 65px" alt="User Avatar">
+                  {% else %}
+                      <img class="img-circle" style="width: 65px; height: 65px" src="{% static 'app/img/default.gif' %}" alt="User Avatar">
+                  {% endif %}
+              </div>
+              <!-- /.widget-user-image -->
+            {% if the_user.first_name %}
+                    <h3 class="widget-user-username">
+                        {{ the_user.first_name }}{{ the_user.last_name }} </h3>
+                {% endif %}
+            {% if the_user.userprofile.about_me %}
+                <h5 class="widget-user-desc">{{ the_user.userprofile.about_me }}</h5>
+                {% endif %}
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                <li><a href="{% url 'account:profile_edit' the_user.id %}">{% trans 'Editar mi información' %}</a></li>
+{#                <li><a href="{% url 'account:change_password' %}">{% trans 'Cambiar mi password' %}</a></li>#}
+              </ul>
+            </div>
+          </div>
+          <!-- /.widget-user -->
+        </div>
+    <div class="col-md-8">
+        <div class="box box-widget">
+            {% if edit %}
+                <div class="box-header with-border">
+                    <h3 class="box-title">{% trans 'Editar perfil' %}</h3>
+                </div>
+            {% endif %}
+            <div class="box-body">
+                        {% if edit %}
+                <div class="col-xs-12">
+                    <form class="form-horizontal" enctype="multipart/form-data" method="post" style="padding: 10px" action=".">
+
+                        {% csrf_token %}
+                            <div class="form-group">
+                                <label for="name" class="control-label">Nombre</label>
+
+                                    <input type="text" class="form-control" name="first_name" maxlength="30"
+                                           value="{{ the_user.first_name }}">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label">Email</label>
+
+                                    <input type="email" class="form-control" name="email" value="{{ the_user.email }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="control-label">Foto de perfil</label>
+                                    <input type="file" class="form-control" name="image">
+                            </div>
+                            <div class="form-group">
+                                <label for="about_me" class="control-label">Acerca de mi</label>
+
+
+                                    <textarea class="form-control" maxlength="100" rows="2"
+                                              name="about_me">{{ the_user.userprofile.about_me }}</textarea>
+                                    <span class="help-block">Compartenos lo que eres y lo que te gusta.</span>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Superpoderes</label>
+                                    <select multiple="multiple" class="form-control select-multiple" name="powers_id" id="powers_id">
+                                        {% for power in powers %}
+                                            <option value="{{ power.id }}"
+                                                    {% if power.id in my_powers_id %}selected="selected"{% endif %}>{{ power.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <span class="help-block">Selecciona tus superpoderes</span>
+                            </div>
+                            <div class="form-group">
+                                <label class=" control-label">Soy {{ the_user.userprofile.gender }}</label>
+
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gender" id="optionsRadios1" value="0" {% if the_user.userprofile.gender == "0" %}checked="checked"{% endif %}
+                                                   checked="">
+                                            Hombre
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gender" id="optionsRadios2" {% if the_user.userprofile.gender == "1" %}checked="checked"{% endif %}
+                                                   value="1">
+                                            Mujer
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="gender" id="optionsRadios2" {% if the_user.userprofile.gender == "2" %}checked="checked"{% endif %}
+                                                   value="2">
+                                            Prefiero no compartir
+                                        </label>
+                                    </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="website" class="control-label"> Sitio Web</label>
+
+
+                                    <input type="text" class="form-control" name="website"
+                                           value="{{ the_user.userprofile.website }}">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="country_code" class="control-label">País</label>
+                                    <select class="form-control" name="country_code">
+                                        {% for country in countries %}
+                                            <option value="{{ country.code }}"
+                                                    {% if country.code == current_country %}selected="selected"{% endif %}>{{ country.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <a href="{% url 'account:profile' the_user.id %}" class="btn btn-default btn-flat">Salir de
+                                        edición</a>
+                                    <button type="submit" class="btn btn-primary btn-flat">Guardar cambios</button>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            {% else %}
+                              <div class="tabbable-panel">
+				<div class="tabbable-line">
+					<ul class="nav nav-tabs ">
+{#						<li class="active">#}
+{#							<a href="#tab_default_1" data-toggle="tab">#}
+{#							Mis Favoritos </a>#}
+{#						</li>#}
+						<li class="active">
+							<a href="#tab_default_2" data-toggle="tab">
+							Mis Superpoderes </a>
+						</li>
+						<li>
+							<a href="#tab_default_3" data-toggle="tab">
+							Mis Logros</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+{#						<div class="tab-pane active" id="tab_default_1">#}
+{##}
+{#                            {% for favorite in the_user.favoritepost_set.all %}#}
+{#                                <div class="attachment-block clearfix">#}
+{#                                <img class="attachment-img" src="{{ favorite.post.related_post_image_thumbnail }}" alt="{{ favorite.post.title }}">#}
+{##}
+{#                                <div class="attachment-pushed">#}
+{#                                    <h4 class="attachment-heading"><a href="/{{ favorite.post.slug }}">{{ favorite.post.title }}</a></h4>#}
+{##}
+{#                                    <div class="attachment-text">#}
+{#                                        {{ favorite.post.abstract }} <a#}
+{#                                            href="/{{ favorite.post.slug }}">...</a>#}
+{#                                    </div>#}
+{#                                    <!-- /.attachment-text -->#}
+{#                                </div>#}
+{#                                <!-- /.attachment-pushed -->#}
+{#                            </div>#}
+{#                                {% endfor %}#}
+{#						</div>#}
+						<div class="tab-pane active" id="tab_default_2">
+							<ul class="list-inline clearfix">
+                                    {% for power in the_user.userprofile.powers.all %}
+                                        <li style="margin-bottom: 10px">
+                                            {% if power.image %}
+                                                <img src="{{ power.image.url }}" width="60px" height="60px">
+                                                <br/>
+                                            {% endif %}
+                                            {{ power.name }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+						</div>
+						<div class="tab-pane" id="tab_default_3">
+							<ul class="list-inline">
+                                    {% for logro in achievements %}
+                                        <li style="text-align:center;">
+                                            <img data-toggle="tooltip" data-placement="rigth"
+                                                 title="{{ logro.achievement.message_for_user }}"
+                                                 src="{{ logro.achievement.thumbnail }}" alt="ejemplo" width="60px"
+                                                 height="60px" class="img-circle"/>
+                                            <br/>
+                                            {{ logro.achievement.name }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+            {% endif %}
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+    <script src="{% static 'PyAdminLTE/plugins/select2/select2.js' %}"></script>
+    <script>
+        $(document).on('ready', function () {
+            {% if message %}
+                alertify.success({{ message }});
+            {% endif %}
+            pythonizame.profile();
+        });
+    </script>
+    <script type="text/javascript">
+        $(".select-multiple").select2();
+    </script>
+{% endblock scripts %}
+

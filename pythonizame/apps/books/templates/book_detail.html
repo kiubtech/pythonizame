@@ -1,0 +1,136 @@
+{% extends 'base_blog.html' %}
+{% load static %}
+{% block skin %}skin-yellow{% endblock %}
+{% block head %}
+{% endblock head %}
+{% block title %} {{ book.title }}{% endblock title %}
+{% block metas %}
+<meta name="description" content="{{ book.description|striptags }}">
+<meta name="keywords" itemprop="keywords" content="{% for my_tag in book.tags.all %}{{ my_tag }},{% endfor %}">
+<meta property="og:locale" content="es_MX" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="{% if book.image %}{{ book.image.url}}{% endif %}">
+<meta property="og:title" content="{{ book.title }}" />
+<meta property="og:description" content="{{ book.description|striptags }}" />
+<meta property="og:url" content="http://pythoniza.me{% url 'books:detail' book.slug %}" />
+<meta property="og:site_name" content="Pythonízame | {{ book.title }}" />
+{% endblock metas%}
+{% block content %}
+
+    <article class="col-xs-12" id="detail_article" style="padding: 16px">
+            <div class="col-sm-4 col-xs-12">
+                {% if book.image %}
+                    <img src="{{ book.image.url }}" class="img-responsive img-book-detail" style="border: 1px solid #d8d8d8" alt="{{ book.title }}" />
+                {% else %}
+                    <img src="https://www.awm.gov.au/sites/default/files/book-cover-british-official-red-cover.jpg" class="img-responsive img-book-detail" alt="{{ book.title }}" />
+                {% endif %}
+            </div>
+            <div class="col-sm-8 col-xs-12">
+                <p class="lead">{{ book.title }}</p>
+                <p>{{ book.description | safe }}</p><br/>
+                <span><b>Autor:</b> {{ book.author }}</span><br/>
+                <span>Fuente: <a href="{{ book.url }}" target="_blank">{{ book.url }}</a></span><br/>
+                <span>Etiquetas:
+                    {% for my_tag in book.tags.all %}
+                    <small class="fa fa-tag"> {{ my_tag }} </small>
+                    {% endfor %}
+                </span><br/>
+            </div>
+        <div class="actions-detail col-xs-12 text-right">
+            <span>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ post.title }}"
+               data-hashtags="pythonizame">Tweet</a>
+            </span>&nbsp&nbsp
+            <span>
+            <!-- Inserta esta etiqueta donde quieras que aparezca Botón Compartir. -->
+            <div class="g-plus" data-action="share" data-annotation="bubble" data-href="{{ post.url }}"></div>
+            </span>
+            <span>{{ book.publication_date | date }}</span>&nbsp&nbsp
+        </div>
+        <div class="hr col-xs-5" style="float: right"></div>
+        <div class="post_content col-xs-12">
+            <br/><br/>
+            <div id="disqus_thread"></div>
+        </div>
+    </article>
+{% endblock content%}
+{% block aside_books %}
+    {% if book.file %}
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+            <a href="{{ book.file.url }}" download class="btn btn-primary btn-lg btn-block" style="margin-top: 18px"><i
+                    class="fa fa-cloud-download"></i> Descargar libro</a>
+        </div>
+    {% else %}
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 aside-item">
+            <a href="{{ book.url }}" target="_blank" class="btn btn-primary btn-lg btn-block"
+               style="margin-top: 18px"><i class="fa fa-cloud-eye"></i> ver libro</a>
+        </div>
+    {% endif %}
+    <br>
+{% endblock aside_books %}
+
+{% block custom_aside_main %}
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden;margin-top:10px">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="col-xs-12 no-padding">
+       <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Libros relacionados</h3>
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <ul class="products-list product-list-in-box">
+                  {% for book_rel in related_books %}
+                      <li class="item">
+                          <div class="product-img">
+                              <img src="{{ book_rel.related_book_image_thumbnail }}" alt="{{ book_rel.title }}">
+                          </div>
+                          <div class="product-info">
+                              <a href="{% url 'books:detail' book_rel.slug %}"
+                                 class="product-title">{{ book_rel.title }}
+                              </a>
+                              <span class="product-description">
+                          Hace {{ book_rel.publication_date|timesince }}
+                        </span>
+                          </div>
+                      </li>
+        {% endfor %}
+              </ul>
+            </div>
+            <!-- /.box-body -->
+          </div>
+    </div>
+
+
+
+
+{% endblock custom_aside_main %}
+
+{% block scripts %}
+    {% if config.enable_disqus %}
+<script type="text/javascript">
+ /* * * CONFIGURATION VARIABLES * * */
+ var disqus_shortname = '{{ config.disqus_shortname }}';
+
+ /* * * DON'T EDIT BELOW THIS LINE * * */
+ (function() {
+ var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+ dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+ (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+{% endif %}
+{% endblock scripts %}

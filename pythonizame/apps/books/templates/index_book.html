@@ -1,0 +1,154 @@
+{% extends 'base_blog.html' %}
+{% load static %}
+{% block title %} Libros {% endblock title %}
+{% block title_header %}Pythonízame con libros{% endblock title_header %}
+{% block skin %}skin-yellow{% endblock %}
+{% block content %}
+    <br>
+    {% for book in object_list %}
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="panel panel-default panel_book">
+          <div class="panel-body">
+            <div class="col-xs-4" style="padding: 0">
+            <a href="{% url 'books:detail' book.slug %}">
+                {% if book.image %}
+                    <img src="{{ book.image_thumbnail }}" style="width: 120px;height: 160px;border: 1px solid #d8d8d8" class="img-responsive" alt=""/>
+                {% else %}
+                    <img src="https://www.awm.gov.au/sites/default/files/book-cover-british-official-red-cover.jpg" width="120px" height="160px" class="img-responsive" alt="" />
+                {% endif %}
+            </a>
+            </div>
+              <div class="col-xs-8 book_detail">
+                  <a href="{% url 'books:detail' book.slug %}"> <h6 class="book-title">{{ book.title|capfirst }}</h6></a>
+                  <b>Descripción:</b><br/>
+                  <small style="margin-bottom: 0;">{{ book.description| safe | truncatechars:100 }}</small>
+
+                  <p><b>Categoría:</b>
+                      {% for category in book.categories.all %}
+                          {% if forloop.last %}
+                               {{ category.name }}
+                          {% else %}
+                               {{ category.name }},
+                          {% endif %}
+
+                      {% endfor %}
+                  </p>
+              <hr style="margin:10px 0 "/>
+{#                  <p><b>Autor:</b> {{ book.author }}</p>#}
+              </div>
+          </div>
+        <p style="clear: both;"></p>
+        </div>
+        </div>
+    {% endfor %}
+
+
+    <div class="row">
+        <section id="navigationBlog" class="col-xs-12">
+
+            {% if page_obj.has_next %}
+                <a href="/books/page/{{ page_obj.next_page_number }}/{% if queryset %}?q={{ queryset }}{% endif %}"
+                   class="btn btn-primary pull-left">
+                    <i
+                            class="fa fa-arrow-circle-left"></i>
+                    Anteriores </a>
+            {% endif %}
+            {% if page_obj.has_previous %}
+                <a href="/books/page/{{ page_obj.previous_page_number }}/{% if queryset %}?q={{ queryset }}{% endif %}"
+                   class="btn btn-primary pull-right"> Recientes
+                    <i
+                            class="fa fa-arrow-circle-right"></i>
+                </a>
+            {% endif %}
+        </section>
+    </div>
+    <br>
+
+
+{% endblock content %}
+
+{% block aside_books %}
+       <form action="." method="get">
+
+        <label for="">&nbsp;</label>
+        <div class="form-group">
+
+            <div class="input-group">
+                <input type="text" name="q" value="{% if queryset %}{{ queryset }}{% endif %}" placeholder="Buscar libro ..."
+                       class="form-control">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-warning"><i class="fa fa-search"></i></button>
+                    </span>
+            </div>
+
+
+        </div>
+
+    </form>
+{% endblock aside_books %}
+
+{% block custom_aside_main %}
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Apóyanos</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="4FCV6MTFGPBY8">
+                <input type="image" src="https://www.paypalobjects.com/es_XC/MX/i/btn/btn_donateCC_LG.gif"
+                       border="0"
+                       name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1"
+                     height="1">
+            </form>
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer text-center">
+            <a href="/faq-donaciones/">¿Por que donar?</a>
+        </div>
+        <!-- /.box-footer -->
+    </div>
+    <!--/.box -->
+
+
+
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Síguenos en nuestras redes sociales</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            {% include 'includes/div_social.html' %}
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+    <div class="col-xs-12 no-padding">
+        <br/>
+        <p> Agradecemos a los autores que con gran esfuerzo han creado estas obras y que la comparten a toda la comunidad</p>
+        <p> Todas las marcas y marcas registradas que aparecen en este sitio son propiedad de sus respectivos propietarios</p>
+        <p> Pythonízame no realiza ningún tipo de actividad lucrativa con el contenido aquí presentado</p>
+        <p><small>ATTE. Pythoniza.me</small></p>
+    </div>
+
+
+{% endblock custom_aside_main %}

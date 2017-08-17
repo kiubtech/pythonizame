@@ -1,0 +1,59 @@
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+#dist
+#build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+#Pycharm files
+.idea/
+
+# Doc Sphinx
+_build/
+
+
+
+# Base de datos SQlite
+db.sqlite3
+
+# Archivos del registro
+
+
+# Archivos Media
+pythonizame/media
+
+#nodemodules (desarrollo)
+node_modules
+/pythonizame/settings.json
+log/*.log
+/pythonizame/static/bower_components/

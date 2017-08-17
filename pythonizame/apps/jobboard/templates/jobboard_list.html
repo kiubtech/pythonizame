@@ -1,0 +1,182 @@
+{% extends 'base_blog.html' %}
+{% block skin %}skin-green{% endblock %}
+{% block title %}Jobs {% endblock title %}
+{% load static i18n %}
+
+
+
+{% block custom_aside_main %}
+
+    {% include 'includes/buttonsJob.html' with add_job=True %}
+    <br>
+    <div class="col-xs-12 no-padding" style="padding:0;overflow-x:hidden ">
+        {% include 'includes/fb_widget.html' %}
+    </div>
+
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <br>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+{% endblock custom_aside_main %}
+
+{% block main-swipe %}
+    <div class="col-xs-12">
+        <!-- Search Form -->
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- Search Form -->
+            <form role="form" action="." method="get">
+                <!-- Search Field -->
+                <div class="row">
+                    <h1 class="text-center">Buscar empleo</h1>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" type="text" value="{% if q %}{{ q }}{% endif %}"
+                                   id="txtsearchJobs" name="q" placeholder="Buscar empleo..."/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-success btn-flat" type="submit" id="btnFindJob">
+                                    <span class="fa fa-search">Buscar</span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="form-group col-md-8 col-xs-12">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" {% if partial == '1' %} checked {% endif %} name="partial"
+                                   id="check_tiempo_parcial" value="1"> Tiempo parcial
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" {% if full == '1' %} checked {% endif %} name="full"
+                                   id="check_tiempo_completo" value="1"> Tiempo completo
+                        </label>
+                    </div>
+
+                    <div class="form-group col-md-4 col-xs-12">
+                        <select class="form-control input-sm" name="country" id="countries">
+                            <option value="">{% trans 'Selecciona tu país' %}</option>
+                            {% for country in countries %}
+                                {% if country.0 in available_countries %}
+                                    <option value="{{ country.0 }}"
+                                            {% if country.0 == selected_country %}selected{% endif %}>{{ country.1 }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+
+            </form>
+            <!-- End of Search Form -->
+
+        </div>
+        <br>
+        <!-- End of Search Form -->
+    </div>
+
+
+
+
+{% endblock main-swipe %}
+{% block content %}
+    <br>
+    {% if object_list %}
+        {% for element in object_list %}
+            <div class="col-xs-12">
+                <div class="box box-widget">
+                    <div class="box-body">
+
+                        <div class="col-sm-12 col-xs-12">
+                            <div>
+                                <h2><a href="{% url 'jobboard:detail' element.id %}">{{ element.title }}</a>
+                                <img style="margin-left: 5px;" src="{{ element.country.flag }}">
+                                </h2>
+                            </div>
+                            <hr>
+                            <p>{{ element.description |linebreaks|truncatechars:300 }}</p>
+                            {% if element.website %}
+                                <p><i class="fa fa-globe"></i> <a href="{{ element.website }}">{{ element.website }}</a>
+                                </p>
+                            {% endif %}
+                            <p>
+                                <i class="fa fa-building"></i> {{ element.company_name }}
+                                <span class="pull-right"
+                                      style="font-size: 10px !important;">{{ element.approval_datetime.date }}</span>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <!-- Paginación de elementos -->
+    <div class="row" style="margin-bottom: 20px">
+    <div class="col-xs-12">
+        <section id="navigationBlog" class="col-xs-12">
+            {% if page_obj.has_next %}
+                <a href="{% url 'jobboard:list' %}?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if selected_country %}&country={{ selected_country }}{% endif %}{% if full %}&full={{ full }}{% endif %}{% if partial %}&partial={{ partial }}{% endif %}"
+                   class="btn btn-primary pull-left">
+                    <i class="fa fa-arrow-circle-left"></i> {% trans 'Anteriores' %} </a>
+            {% endif %}
+            {% if page_obj.has_previous %}
+                <a href="{% url 'jobboard:list' %}?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if selected_country %}&country={{ selected_country }}{% endif %}{% if full %}&full={{ full }}{% endif %}{% if partial %}&partial={{ partial }}{% endif %}"
+                   class="btn btn-primary pull-right"> {% trans 'Recientes' %}
+                    <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            {% endif %}
+        </section>
+    </div>
+    </div><!-- END Paginación de elementos -->
+    {% else %}
+        <hr>
+        <div class="col-xs-12">
+            <div class="panel">
+                <h2 class="text-center text-muted">
+                    <i class="fa fa-smile-o fa-4x"></i>
+                    <br>
+                    {% trans 'No hemos encontrado empleos en tu búsqueda' %}
+                </h2>
+
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'jobboard:add' %}">
+                        <h4 class="text-center">
+                            {% trans '¿Necesitas reclutar a los mejores del mundo?' %}
+                        </h4>
+                    </a>
+                {% else %}
+
+                    <a href="#" data-toggle="modal" data-target="#modalJob">
+                        <h4 class="text-center">
+                            {% trans '¿Necesitas reclutar a los mejores del mundo?' %}
+
+                        </h4>
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+        </div>
+    {% endif %}
+    <div class="clearfix"></div>
+{% endblock content %}
+{% block scripts %}
+    <script>
+        $(document).on('ready', function () {
+            pythonizame.jobs_list();
+        });
+    </script>
+{% endblock scripts %}

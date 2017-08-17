@@ -1,0 +1,22 @@
+{% extends "base_security.html" %}
+{% load static %}
+{% block title %}
+    Activación
+{% endblock title %}
+
+{% block container %}
+<div class="container" style="margin-top: -18px">
+        <div class="card card-container">
+            <p class="profile-name-card">{% if token_correcto %} Gracias! {% else %} :( {% endif %}</p>
+            <div class="panel-body text-center"><br>
+              {% if token_correcto %}
+                <p>Gracias por activar tu cuenta</p>
+                <p>Ahora puedes disfrutar de los beneficios de nuestra <a href="/security/login/">plataforma</a></p>
+            {% else %}
+                <p>El token proporcionado no es válido, intente de nuevo</p>
+                <p>Si lo prefiere puede solicitar un nuevo token haciendo clic <a href="{% url 'security:new_token_activation' %}">aquí</a></p>
+            {% endif %}
+          </div>
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+{% endblock %}

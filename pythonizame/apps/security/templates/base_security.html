@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock title %} | Pythonízame</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css'%}">
+    <link rel="stylesheet" href="{% static 'app/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+<link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'app/libs/alertify/themes/alertify.core.css' %}" rel="stylesheet">
+<link href="{% static 'app/libs/alertify/themes/alertify.default.css' %}" rel="stylesheet">
+</head>
+<body>
+{% block container %}
+{% endblock container %}
+<script src="{% static 'PyAdminLTE/plugins/jQuery/jQuery-2.1.4.min.js' %}"></script>
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'app/libs/DjangoAjax/DjangoAjax.js' %}"></script>
+<script src="{% static 'app/js/main.js' %}"></script>
+<script src="{% static 'app/libs/alertify/alertify.min.js' %}"></script>
+<script src="{% static 'app/libs/jquery.form/jquery.form.min.js' %}"></script>
+{% block script %}
+
+{% endblock script %}
+</body>
+</html>

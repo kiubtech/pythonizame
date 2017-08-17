@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Bienvenido a Pythonízame!</h1>
+<p>Hemos mejorado nuestra plataforma para ofrecerte información y recursos útiles para tu formación en Python</p>
+<p>Tu nombre de usuario es: <b>{{ username }}</b>. ¡Buena elección!</p>
+<h3>Sólo nos queda un paso más!</h3>
+<p>Por favor valida tu email con el siguiente link para que disfrutes de todos los beneficios de nuestra comunidad.</p>
+<p><a href="{{ url_server }}/security/activation/{{ token }}">{{ url_server }}/security/activation/{{ token }}</a></p>
+<br><br>
+<p>Atentamente</p>
+<p>Pythonízame</p>
+</body>
+</html>

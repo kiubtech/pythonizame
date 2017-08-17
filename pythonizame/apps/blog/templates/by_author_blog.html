@@ -1,0 +1,56 @@
+{% extends 'base_blog.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block title %} Blog {% endblock title %}
+{% block entry_list %}
+    <h1>{{ category.name|capfirst }}</h1><br>
+    {% for post in object_list %}
+        <article class="post">
+                <div class="post-thumb">
+                    <a href="{% url 'blog:post_detail' post.slug %}"><img class="img-responsive" src="{{ post.pin_image_thumbnail }}" alt="" /></a>
+                </div><!--//post-thumb-->
+                <div class="content">
+                    <h3 class="post-title"><a href="{% url 'blog:post_detail' post.slug %}">{{ post.title|capfirst }} {{ author.username }}</a></h3>
+                    <div class="meta">
+                        <ul class="meta-list list-inline">
+                            <li class="post-time post_date date updated">{{ post.timestamp }}</li>
+                            <li class="post-author"> by <a href="#">@{{ post.created_by.username }}</a></li>
+                            <li class="post-comments-link">
+                                <a href="blog-single.html#comment-area"><i class="fa fa-heart"></i>{{ post.likes.count }} Likes</a>
+                            </li>
+                        </ul><!--//meta-list-->
+                    </div><!--meta-->
+                    <div class="post-entry">
+                    <p>{{ post.abstract }}</p>
+                    <a class="read-more" href="{% url 'blog:post_detail' post.slug %}">Leer más<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+        </article><!--//post-->
+    {% endfor %}
+{% endblock entry_list %}
+{% block pagination %}
+    {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="enabled"><a href="{% url 'blog:by_author_paginated' category.slug page_obj.previous_page_number %}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><a href="#">&laquo;</a></li>
+            {% endif %}
+            {% for num_page in paginator.page_range %}
+                {# Solo mostramos +5 y -5 en el paginator #}
+                {% if page_obj.number|add:'-5' <= num_page and page_obj.number|add:"5" >= num_page%}
+                    {%if page_obj.number == num_page %}
+                        <li class="active"><a href="#">{{ num_page }}<span class="sr-only">(current)</span></a></li>
+                    {% else %}
+                        <li><a href="{% url 'blog:by_author_paginated' author.username num_page %}">{{ num_page }}<span class="sr-only">(current)</span></a></li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li><a href="{% url 'blog:by_author_paginated' author.username page_obj.next_page_number %}">&raquo;</a></li>
+            {% else %}
+                <li><a href="#" class="disabled">&raquo;</a></li>
+            {% endif %}
+        </ul><!--//pagination-->
+    {% endif %}
+{% endblock pagination %}
