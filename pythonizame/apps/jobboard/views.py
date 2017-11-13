@@ -105,7 +105,6 @@ class JobDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(JobDetailView, self).get_context_data(**kwargs)
-        print(context)
         if self.request.user != context['job'].created_by:
             context['job'].num_of_views += 1  # Aumentamos las visitas
             context['job'].save()

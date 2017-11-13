@@ -142,7 +142,7 @@ class UserProfile(models.Model):
         try:
             return json.loads(self.data)['about_me']
         except:
-            print(format_sys_errors(sys, with_traceback=True))
+            format_sys_errors(sys, with_traceback=True)
             return ""
 
     @property

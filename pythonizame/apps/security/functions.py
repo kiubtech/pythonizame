@@ -20,7 +20,6 @@ def send_email(subject, content, to, content_type="text/plain"):
         msg.send()
     except:
         message = format_sys_errors(sys, with_traceback=True)
-        print(message)
 
 
 def get_url_gravatar(email):

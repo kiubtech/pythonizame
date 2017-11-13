@@ -31,7 +31,6 @@ class AddPostLike(LoginRequiredMixin, View):
     @staticmethod
     def post(request):
         form = LikeForm(request.POST)
-        print(request.POST)
         is_like = False
         if form.is_valid():
             try:
@@ -75,7 +74,6 @@ class AddPostFavorite(LoginRequiredMixin, View):
     @staticmethod
     def post(request):
         form = FavoriteForm(request.POST)
-        print(request.POST)
         is_favorite = False
         if form.is_valid():
             try:

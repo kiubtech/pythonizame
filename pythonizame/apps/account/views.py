@@ -144,7 +144,6 @@ class ProfileEditView(LoginRequiredMixin, View):
                 return HttpResponseRedirect(reverse('account:profile', args=(request.user.id,)))
             except:
                 mensaje = format_sys_errors(sys, with_traceback=True)
-                print(mensaje)
                 messages.warning(request, 'Hubo un error, por favor intenta de nuevo.')
                 ctx = {'edit': True}
         else:

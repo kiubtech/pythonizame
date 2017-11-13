@@ -64,7 +64,6 @@ class ChangeImageProfile(LoginRequiredMixin, View):
 class UsernameValidation(View):
 
     def post(self, request):
-        print(request.POST)
         if 'username' in request.POST:
             try:
                 User.objects.get(username=request.POST['username'])
