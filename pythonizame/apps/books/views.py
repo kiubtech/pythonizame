@@ -28,7 +28,7 @@ class BooksMainView(ListView):
                 queryset = cache_blog
             else:
                 queryset = Book.objects.filter(published=True).order_by('-publication_date')
-                cache.set('pythonizame_books', 60 * 5)
+                cache.set('pythonizame_books', queryset, 60 * 5)
         return queryset
 
     def paginate_queryset(self, queryset, page_size):
