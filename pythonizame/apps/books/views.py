@@ -9,7 +9,7 @@ from .functions import book_search
 class BooksMainView(ListView):
     model = Book
     template_name = 'index_book.html'
-    paginate_by = 30
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super(BooksMainView, self).get_context_data(**kwargs)
@@ -26,7 +26,7 @@ class BooksMainView(ListView):
                 queryset = cache_blog
             else:
                 queryset = Book.objects.filter(published=True).order_by('-publication_date')
-                cache.get('pythonizame_books', 60 * 5)
+                cache.set('pythonizame_books', 60 * 5)
         return queryset
 
     def paginate_queryset(self, queryset, page_size):

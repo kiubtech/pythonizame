@@ -94,7 +94,7 @@
                   {% for book_rel in related_books %}
                       <li class="item">
                           <div class="product-img">
-                              <img src="{{ book_rel.related_book_image_thumbnail }}" alt="{{ book_rel.title }}">
+                              <img src="{{ book_rel.image_thumbnail }}" alt="{{ book_rel.title }}">
                           </div>
                           <div class="product-info">
                               <a href="{% url 'books:detail' book_rel.slug %}"
