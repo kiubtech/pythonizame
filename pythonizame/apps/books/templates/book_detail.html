@@ -20,7 +20,7 @@
     <article class="col-xs-12" id="detail_article" style="padding: 16px">
             <div class="col-sm-4 col-xs-12">
                 {% if book.image %}
-                    <img src="{{ book.image.url }}" class="img-responsive img-book-detail" style="border: 1px solid #d8d8d8" alt="{{ book.title }}" />
+                    <img src="{{ book.image_thumbnail }}" class="img-responsive img-book-detail" style="border: 1px solid #d8d8d8" alt="{{ book.title }}" />
                 {% else %}
                     <img src="https://www.awm.gov.au/sites/default/files/book-cover-british-official-red-cover.jpg" class="img-responsive img-book-detail" alt="{{ book.title }}" />
                 {% endif %}
