@@ -1,9 +1,11 @@
+import sys
 from django.core.cache import cache
 from django.http import Http404
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from pythonizame.apps.books.models import Book, BookCategory
 from .functions import book_search
+from pythonizame.apps.global_functions import format_sys_errors
 
 
 class BooksMainView(ListView):
@@ -43,6 +45,7 @@ class BooksMainView(ListView):
             tupla = (paginator, page, page.object_list, page.has_other_pages())
             return tupla
         except:
+            print(format_sys_errors(sys, with_traceback=True))
             raise Http404("No se encontró el sitio especificado")
 
 
