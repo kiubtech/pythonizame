@@ -9,7 +9,6 @@ settings = json_settings()
 AWS_ACCESS_KEY_ID = settings['AMAZON']['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = settings['AMAZON']['AWS_SECRET_ACCESS_KEY']
 
-
 # ================================================
 # CONFIGURACIÓN PARA DJANGO-STORAGE S3 CON BOTO
 # ================================================
