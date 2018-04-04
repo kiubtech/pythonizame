@@ -117,5 +117,18 @@ MIT License
     SOFTWARE.
 
 
+#Live demo
+
+Puedes conocer el proyecto en acción accediendo a nuestro blog [Pythonízame](https://www.pythoniza.me)
+
+#Créditos
+
+Core Team:
+
+- [Alex Dzul](https://github.com/alexdzul)
+- [Gaspar Dzul](https://github.com/gaspardzul)
+- [Daniel Wong](https://github.com/dwong27)
+- [Carlos Uicab](https://github.com/CarlosUicab)
+
 
 Make with love by [@kiubtech](https://twitter.com/kiubtech) and [@pythonizame](https://twitter.com/pythonizame).
