@@ -117,11 +117,11 @@ MIT License
     SOFTWARE.
 
 
-#Live demo
+# Live demo
 
 Puedes conocer el proyecto en acción accediendo a nuestro blog [Pythonízame](https://www.pythoniza.me)
 
-#Créditos
+# Créditos
 
 Core Team:
 
