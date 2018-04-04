@@ -32,6 +32,7 @@ THIRD_PARTY_APPS = (
     'solo',
     'django_countries',
     'widget_tweaks',
+    'storages',
 )
 
 if not settings['DEBUG']:  # Solo aplica si se encuentra en servidor de producción.

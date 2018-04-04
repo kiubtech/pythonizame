@@ -89,7 +89,7 @@
     </div><!-- /.content-wrapper -->
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2017 <a href="/">{{ config.site_name }}</a>.</strong>
+        <strong>Copyright &copy; 2014-<span id="year_in"></span> <a href="/">{{ config.site_name }}</a>.</strong>
     </footer>
 </div><!-- ./wrapper -->
 
@@ -123,6 +123,9 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+
+        var year = (new Date()).getFullYear();
+        $('#year_in').html(year);
     });
 </script>
 {% block scripts %}
