@@ -25,6 +25,7 @@ class SiteConfiguration(SingletonModel):
     pinterest = models.URLField(max_length=1000, null=True, blank=True)
     twitter = models.URLField(max_length=1000, null=True, blank=True)
     gplus = models.URLField(max_length=1000, null=True, blank=True, help_text="Google Plus")
+    google_analytics = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
         return "Site Configuration"
