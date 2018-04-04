@@ -16,7 +16,7 @@
     "ALLOWED_HOSTS": [
       "www.pythoniza.me",
       "pythoniza.me",
-      "localhost",
+      "localhost"
     ]
   },
   "DEBUG": true,
