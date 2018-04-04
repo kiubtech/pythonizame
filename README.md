@@ -1,25 +1,77 @@
-# Pythonizame Blog #
+# Pythonizame Blog
 
 Powered by Django and PostGreSQL
 
-## Pre Requisitos ##
+# Pre Requisitos
 
 ### PostGreSQL en MAC:
 
-$ export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/<version>/bin
+```bash
+$[kiubtech] export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/<version>/bin
+```
 
 donde <version> es la versión instalada de PostGreSQL. Ejemplo, para el caso de PostGreSQL v 9.5 sería
+```bash
+$[kiubtech] export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.5/bin
+```
 
-$ export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.5/bin
+
+# Instalación
+
+### Paso 1. Clonar repositorio. 
+
+```bash
+$[kiubtech] git clone https://github.com/kiubtech/pythonizame.git
+```
+
+### Paso 2. Instalar requerimientos
+
+```bash
+$[kiubtech] cd pythonizame/requirements
+$[kiubtech] pip install -r local.txt
+```
+
+## Paso 3. Crear archivo settings.json
+
+Al descargar el proyecto podrás observar que existe un archivo llamado "settings.example.json". Es necesario crear una copia de este archivo y nombrarlo "settings.json"
+
+```bash
+$[kiubtech] cp settings.example.json settings.json
+```
+
+#### Paso 3.1 Credenciales de base de datos
+
+Es necesario configurar las credenciales de la base de datos de la siguiente manera: 
+
+```json
+"DB": {
+    "ENGINE": "django.db.backends.postgresql_psycopg2",
+    "HOST": "localhost",
+    "NAME": "your-database",
+    "USER": "your-username",
+    "PASSWORD": "your-password",
+    "PORT": 5432
+  },
+```
+#### Paso 3.2 Amazon S3
+
+Si tienen una cuenta de Amazon y requieren que los archivos media funcionen con un bucket de Amazon S3, será necesario llenar la siguiente configuración.
+
+```json
+"AMAZON": {
+    "AWS_ACCESS_KEY_ID": "******",
+    "AWS_SECRET_ACCESS_KEY": "******",
+    "S3": {
+      "USE_S3": true,
+      "AWS_STORAGE_BUCKET_NAME": "yourbucket",
+      "AWS_S3_CUSTOM_DOMAIN": "yourbucket.s3.amazonaws.com",
+      "MEDIAFILES_LOCATION": "media"
+    }
+  },
+```
+
+MEDIAFILES_LOCATION es la configuración para poder definir una carpeta específica para los archivos media de los usuarios. 
 
 
-## Requerimientos ##
 
-Instalar los requeriments según en el entorno de trabajo.
-
-pip install -r requirements/local.txt
-
-## Version ##
-
-0.1
  
