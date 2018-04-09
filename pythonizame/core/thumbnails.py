@@ -15,4 +15,7 @@ THUMBNAIL_ALIASES = {
 }
 
 if settings['AMAZON']['S3']['USE_S3']:
-    THUMBNAIL_DEFAULT_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    THUMBNAIL_DEFAULT_STORAGE = 'pythonizame.core.custom_storages.MediaStorage'
+
+
+THUMBNAIL_BASEDIR = "thumbs"
