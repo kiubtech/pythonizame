@@ -5,12 +5,17 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext as _
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib.auth.models import User
 from django_countries import countries
 from django_countries import Countries
-
+from django.template.loader import render_to_string
 from .models import JobCategory, Job
 from .forms import JobForm
+from pythonizame.core.json_settings import json_settings
+from pythonizame.apps.security.functions import send_email
+
+
+settings = json_settings()
 
 
 class JobbordListView(View):
@@ -117,10 +122,23 @@ class JobChangeToReviewView(View):
         job = get_object_or_404(Job, id=job_id, created_by=request.user)
         job.status = 3
         job.save()
+        # mandamos un correo para notificar a los administradores que se mandó a revisión un nuevo empleo
+        try:
+            users = User.objects.filter(is_staff=True)
+        except:
+            users = None
+
+        for admin in users:
+            to_email = admin.email
+            contenido = render_to_string("mail/change_status_job_template.html", {'url_server': settings['URL_SERVER'],
+                                                                        'username': admin.username,
+                                                                        'job': job.title,
+                                                                        'status': job.status})
+            send_email("Cambio de estatus del empleo", content=contenido, to=to_email, content_type="text/html")
+
         messages.success(request, _("¡Gracias! Hemos recibido tu solicitud de revisión. Muy pronto "
                                     "te enviaremos una respuesta :D"))
         return HttpResponseRedirect(reverse_lazy('jobboard:my-list'))
-
 
 
 class JobAddView(LoginRequiredMixin, View):
@@ -138,7 +156,22 @@ class JobAddView(LoginRequiredMixin, View):
             job.created_by = request.user
             job.save()
             form.save_m2m()
+            #mandamos un correo para notificar a los administradores que se agregó un nuevo empleo
+            try:
+                users = User.objects.filter(is_staff=True)
+            except:
+                users = None
+
+            for admin in users:
+                to_email = admin.email
+                contenido = render_to_string("mail/new_job_template.html", {'url_server': settings['URL_SERVER'],
+                                                                               'username': admin.username,
+                                                                               'job': job.title,
+                                                                               'status': job.status})
+                send_email("Nuevo registro de empleo", content=contenido, to=to_email, content_type="text/html")
+
             messages.success(request, _("Guardado correctamente"))
+
             return HttpResponseRedirect(reverse_lazy('jobboard:my-list'))
         else:
             ctx = {'form': form}
