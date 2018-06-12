@@ -1,0 +1,242 @@
+{% extends 'base_video.html' %}
+{% load static %}
+{% block title %} Blog {% endblock title %}
+{% block main-swipe %}
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {% for post in recent_post %}
+                <div class="swiper-slide carousel-img" data-swiper-parallax="-23%"
+                     style="background: url('{{ post.main_image_thumbnail }}')">
+                    <a href="{% url 'blog:post_detail' post.slug %}">
+                        <div class="overlay-carousel">
+                            <div class="title" data-swiper-parallax="-100">{{ post.title }}</div>
+                            <div class="text" data-swiper-parallax="-300">
+                                <p>{{ post.abstract }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-prev swiper-button-white"></div>
+        <div class="swiper-button-next swiper-button-white"></div>
+    </div>
+{% endblock main-swipe %}
+{% block content %}
+    <div class="col-xs-12" style="padding-left: 0;padding-right: 0;height: 100px;">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- post_detalle1 -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="5925055247"
+             data-ad-format="auto"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+    </div><!-- anuncio -->
+
+    <div class="row">
+        {% for playlist in object_list %}
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                <div class="box box-widget widget-user">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <a href="#">
+                    <a href="{% url 'videos:playlist-detail' playlist.slug %}">
+                        <div class="widget-user-header bg-black no-padding"
+                             style="background: url({{ post.pin_image_thumbnail }}) center center;">
+                             <div class="overlay" style="position: absolute;padding:20px;height: 120px;width: 100%;background: rgba(0,0,0,0.4)">
+
+                                    <h3 class="widget-user-username">{{ playlist.title|capfirst }}</h3>
+                             </div>
+
+                        </div>
+                    </a>
+                    <div class="box-footer box-footer-post">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p>{{ playlist.abstract | truncatechars:80 }}</p>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="card-action">
+                                    <span class="pull-right">{{ post.timestamp | date:"D d M Y" }}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <div class="row">
+        <section id="navigationBlog" class="col-xs-12">
+            {% if page_obj.has_next %}
+                <a href="/?page={{ page_obj.next_page_number }}{% if queryset %}&q={{ queryset }}{% endif %}"
+                   class="btn btn-primary pull-left">
+                <i class="fa fa-arrow-circle-left"></i> Anteriores  </a>
+            {% endif %}
+            {% if page_obj.has_previous %}
+                <a href="/?page={{ page_obj.previous_page_number }}{% if queryset %}&q={{ queryset }}{% endif %}"
+                   class="btn btn-primary pull-right">  Recientes
+                <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            {% endif %}
+        </section>
+    </div>
+    <br>
+
+{% endblock content %}
+
+{% block aside_blog %}
+    <form action="." method="get">
+
+        <div class="input-group">
+            <input type="text" name="q" value="{% if queryset %}{{ queryset }}{% endif %}"
+                   placeholder="Buscar.."
+                   class="form-control">
+            <span class="input-group-btn">
+                      <button type="submit" class="btn btn-info"><i class="fa fa-search"></i></button>
+                    </span>
+        </div>
+
+    </form>
+    <br>
+
+    <div class="box box-widget widget-user-2">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-yellow">
+            <h3 class=" ">Categorías</h3>
+        </div>
+        <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+                {% for category in categories %}
+                    <li><a href="{% url 'blog:by_category' category.slug %}">{{ category.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock aside_blog %}
+{% block aside_books %}
+{% endblock aside_books %}
+
+
+
+{% block custom_aside_main %}
+
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Curso Django Tenant</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            <a href="https://www.udemy.com/aprende-a-crear-proyectos-saas-con-django-tenantpostgresql/?couponCode=PYTHONIZAME" target="_blank">
+                <img src="https://pythonizame.s3.amazonaws.com/media/uploads/2018/04/03/promocursotenant.png"
+                 alt="Curso django Tenant" class="img-responsive">
+            </a>
+            <p>Consigue un descuento al acceder al curso desde este <a href="https://www.udemy.com/aprende-a-crear-proyectos-saas-con-django-tenantpostgresql/?couponCode=PYTHONIZAME18" target="_blank"><b>link</b></a></p>
+
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Apóyanos</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="4FCV6MTFGPBY8">
+                <input type="image" src="https://www.paypalobjects.com/es_XC/MX/i/btn/btn_donateCC_LG.gif"
+                       border="0"
+                       name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea.">
+                <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1"
+                     height="1">
+            </form>
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer text-center">
+            <a href="/faq-donaciones/">¿Por que donar?</a>
+        </div>
+        <!-- /.box-footer -->
+    </div>
+    <!--/.box -->
+
+
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Síguenos en nuestras redes sociales</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body text-center">
+
+            {% include 'includes/div_social.html' %}
+            <!-- /.users-list -->
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="col-xs-12 no-padding" style="padding:0;overflow-x:hidden ">
+        {% include 'includes/fb_widget.html' %}
+    </div>
+
+
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden;margin-top: 10px ">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- aside_blog2 -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="1302990042"
+             data-ad-format="auto"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+{% endblock custom_aside_main %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'bower_components/Swiper/dist/css/swiper.min.css' %}"/>
+{% endblock style %}
+{% block scripts %}
+    <script src="{% static 'bower_components/Swiper/dist/js/swiper.jquery.min.js' %}"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            spaceBetween: 30,
+            loop: true
+        });
+    </script>
+{% endblock %}

@@ -8,6 +8,7 @@ settings = json_settings()
 
 urlpatterns = [
     url(r'^pymin/', include(admin.site.urls)),
+    url(r'^videos/', include('pythonizame.apps.videos.urls', namespace='videos')),
     url(r'^', include('pythonizame.apps.books.urls', namespace='books')),
     url(r'^', include('pythonizame.apps.blog.urls', namespace='blog')),
     url(r'^account/', include('pythonizame.apps.account.urls', namespace='account')),
