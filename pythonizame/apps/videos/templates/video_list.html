@@ -109,20 +109,20 @@
     </form>
     <br>
 
-    <div class="box box-widget widget-user-2">
-        <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-yellow">
-            <h3 class=" ">Categorías</h3>
-        </div>
-        <div class="box-footer no-padding">
-            <ul class="nav nav-stacked">
-                {% for category in categories %}
-                    <li><a href="{% url 'blog:by_category' category.slug %}">{{ category.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+{#    <div class="box box-widget widget-user-2">#}
+{#        <!-- Add the bg color to the header using any of the bg-* classes -->#}
+{#        <div class="widget-user-header bg-yellow">#}
+{#            <h3 class=" ">Categorías</h3>#}
+{#        </div>#}
+{#        <div class="box-footer no-padding">#}
+{#            <ul class="nav nav-stacked">#}
+{#                {% for category in categories %}#}
+{#                    <li><a href="{% url 'blog:by_category' category.slug %}">{{ category.name }}</a>#}
+{#                    </li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock aside_blog %}
 {% block aside_books %}
 {% endblock aside_books %}

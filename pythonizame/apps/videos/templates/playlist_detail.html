@@ -39,18 +39,18 @@
         <div class="hr col-xs-5" style="float: right"></div>
 
         <div class="post_content col-xs-12">
-            <div class="banner_post_detailt" style="margin-bottom: 30px">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                <!-- post_detalle1 -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-5267377707713164"
-                     data-ad-slot="5925055247"
-                     data-ad-format="auto"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+{#            <div class="banner_post_detailt" style="margin-bottom: 30px">#}
+{#                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>#}
+{#                <!-- post_detalle1 -->#}
+{#                <ins class="adsbygoogle"#}
+{#                     style="display:block"#}
+{#                     data-ad-client="ca-pub-5267377707713164"#}
+{#                     data-ad-slot="5925055247"#}
+{#                     data-ad-format="auto"></ins>#}
+{#                <script>#}
+{#                    (adsbygoogle = window.adsbygoogle || []).push({});#}
+{#                </script>#}
+{#            </div>#}
             {{ playlist.description|safe }}
             <br/><br/>
             <div class="box-body table-responsive no-padding">
@@ -69,7 +69,7 @@
                             <p>{{ video.description|safe|truncatechars:150 }}</p>
                         </td>
                         <td><h4>
-                            <a href="{{ video.url }}"> <i class="fa fa-play-circle text-danger"></i> {% trans 'Reproducir' %}
+                            <a href="{% url 'videos:video-detail' video.id %}"> <i class="fa fa-play-circle text-danger"></i> {% trans 'Reproducir' %}
                             </a>
                         </h4>
                         </td>
@@ -159,7 +159,7 @@
                                      alt="{{ playlist_rel.title }}">
                             </div>
                             <div class="product-info">
-                                <a href="{% url 'blog:post_detail' playlist_rel.slug %}"
+                                <a href="{% url 'videos:playlist-detail' playlist_rel.slug %}"
                                    class="product-title">{{ playlist_rel.title }}
                                 </a>
                                 <span class="product-description">

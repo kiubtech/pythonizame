@@ -1,0 +1,194 @@
+{% extends 'base_video.html' %}
+{% load static thumbnail i18n %}
+{% block title %} {{ video.title }}{% endblock title %}
+{% block metas %}
+    <meta name="description" content="{{ post.abstract }}">
+    <meta name="keywords" itemprop="keywords" content="{% for my_tag in post.tags.all %}{{ my_tag }},{% endfor %}">
+    <meta property="og:locale" content="es_MX"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:image" content="{{ video.playlist.cover|thumbnail_url:'main_blog_image' }}">
+    <meta property="og:title" content="{{ video.title }}"/>
+    <meta property="og:description" content="{{ video.abstract }}"/>
+    <meta property="og:url" content="{{ video.url }}"/>
+    <meta property="og:site_name" content="Pythonízame | {{ video.title }}"/>
+{% endblock metas %}
+{% block style %}
+    <style>
+    .videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+    </style>
+{% endblock style %}
+{% block content %}
+    <article class="col-xs-12" id="detail_article">
+        <div class="actions-detail col-xs-12 text-right">
+            <div class="hr col-xs-5" style="float: right"></div>
+            <div class="post_content col-xs-12">
+                <div class="videoWrapper text-center" style="margin-top: 10px">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/WW1wonc_zIs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+{#                    <iframe width="100%" height="400"#}
+{#                            src="{{ video.url }}"#}
+{#                            src="https://youtu.be/WW1wonc_zIs"#}
+{#                            frameborder="0"></iframe>#}
+{#                    <iframe width="100%" height="400"#}
+{#                            src="http://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"#}
+{#                            frameborder="0"#}
+{#                            allow="autoplay; encrypted-media" allowfullscreen></iframe>#}
+                </div>
+                <div class="video-description text-left" style="font-size: 15px; margin-top: 20px">
+                    {{ video.description|safe }}
+                </div>
+                <div class="banner_post_detailt">
+                    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                    <!-- Primera página - 3 (pythoniza.me) -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-5267377707713164"
+                         data-ad-slot="9762554440"
+                         data-ad-format="auto"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                <div id="disqus_thread"></div>
+            </div>
+    </article>
+{% endblock content %}
+{% block aside_blog %}
+    <div class="col-xs-12 no-padding">
+        <div class="box box-danger">
+            <div class="box-body box-profile">
+                {% if video.playlist.cover %}
+                    <a href="{% url 'videos:playlist-detail' video.playlist.slug %}"><img
+                            src="{{ video.playlist.cover|thumbnail_url:"main_blog_image" }}"
+                            class="img-responsive"
+                            alt=""
+                            height="50px"/>
+                    </a>
+                    {#                    </a>#}
+                {% else %}
+                    {#                    <a href="{% url 'account:profile' post.author.id %} ">#}
+                    <img src="{% static 'app/img/default.gif' %}"
+                         class="profile-user-img img-responsive img-circle"
+                         alt=""
+                         height="50px"/>
+                    {#                    </a>#}
+                {% endif %}
+                <h3 class="profile-username text-center">{{ video.author.first_name }} {{ video.author.last_name }}</h3>
+
+                <p class="text-muted text-center">{{ video.author.userprofile.about_me }}</p>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+    {#    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">#}
+    {#        <div class="box box-danger">#}
+    {#            <div class="box-header with-border">#}
+    {#                <h3 class="box-title">Etiquetas</h3>#}
+    {#            </div>#}
+    {#            <!-- /.box-header -->#}
+    {#            <div class="box-body">#}
+    {#                {% for my_tag in post.tags.all %}#}
+    {#                    <small class="fa fa-tag"><a href="{% url 'blog:by_tag' my_tag.slug %}"> {{ my_tag }}</a></small>#}
+    {#                {% endfor %}#}
+    {#                <!-- /.users-list -->#}
+    {#            </div>#}
+    {#            <!-- /.box-body -->#}
+    {#        </div>#}
+    {#    </div>#}
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 no-padding ">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Listas de reproducción</h3>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <th>#</th>
+                            <th>{% trans 'Título' %}</th>
+                        </tr>
+                        {% for video_play in video.playlist.video_set.all %}
+                            <tr>
+                            <td>{{ video_play.order }}</td>
+                                <td>
+                                    <small>
+                                        <a href="{% url 'videos:video-detail' video_play.id %}">{{ video_play.title }}</a>
+                                        <span style="font-size: 8px" class="text-danger">
+                                            {% if video_play.id == video.id %}
+                                                / {% trans 'Reproduciendo' %}
+                                            {% endif %}
+                                        </span>
+                                    </small>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <ul class="products-list product-list-in-box">
+                    {% for video_rel in related_video %}
+                        <li class="item">
+                            <div class="product-img">
+                                <img src="{{ video_rel.cover|thumbnail_url:'pin_blog_image' }}"
+                                     alt="{{ video_rel.title }}">
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'blog:post_detail' video_rel.slug %}"
+                                   class="product-title">{{ video_rel.title }}
+                                </a>
+                                <span class="product-description">
+                          Hace {{ video_rel.timestamp|timesince }}
+                        </span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+{% endblock aside_blog %}
+{% block scripts %}
+    {% if config.enable_disqus %}
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = '{{ config.disqus_shortname }}';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments
+            powered by Disqus.</a></noscript>
+    {% endif %}
+{% endblock scripts %}
