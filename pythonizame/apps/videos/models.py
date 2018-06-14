@@ -78,7 +78,7 @@ class Video(models.Model):
         return self.title
 
     class Meta:
-        ordering = ('-order', )
+        ordering = ('order', )
         verbose_name = _("Video")
         verbose_name_plural = _("Videos")
 
