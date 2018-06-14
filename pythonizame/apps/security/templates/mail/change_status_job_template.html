@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>¡Hola {{ username }}!</h1>
+<p>Te informamos que el empleo "{{ job }}" ha sido actualizado al estatus
+    "{% if status == 3 %}
+        En revisión
+    {% elif status == 1 %}
+        Aprobado
+    {% elif status == 0 %}
+        Rechazado
+    {% endif %}"</p>
+<p>Atentamente</p>
+<p>Pythonízame</p>
+</body>
+</html>
