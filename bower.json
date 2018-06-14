@@ -1,7 +1,7 @@
 {
-  "name": "Pythoniza.me",
+  "name": "pythoniza.me",
   "version": "0.0.1",
-  "description": "Aplicación Pythonizame",
+  "description": "Pythonizame App",
   "dependencies": {
     "Swiper": "swiper#~3.1.5",
     "bootstrap": "^3.3.6",
