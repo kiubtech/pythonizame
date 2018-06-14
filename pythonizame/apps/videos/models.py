@@ -60,9 +60,14 @@ class PlayList(models.Model):
         verbose_name = _("Lista de reproducción")
         verbose_name_plural = _("Listas de reproducción")
 
+    @property
+    def url(self):
+        return "https://pythoniza.me/{0}".format(self.slug)
+
 
 class Video(models.Model):
     created_by = models.ForeignKey(User)
+    order = models.IntegerField(default=1)
     playlist = models.ForeignKey(PlayList, help_text=_("Lista de reproducción al que pertenece el video"))
     title = models.CharField(max_length=500)
     description = RichTextUploadingField(max_length=1000000)
@@ -73,6 +78,7 @@ class Video(models.Model):
         return self.title
 
     class Meta:
+        ordering = ('-order', )
         verbose_name = _("Video")
         verbose_name_plural = _("Videos")
 

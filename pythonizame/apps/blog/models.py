@@ -142,7 +142,7 @@ class Post(models.Model):
 
     @property
     def url(self):
-        return "http://pythoniza.me/{0}".format(self.slug)
+        return "https://pythoniza.me/{0}".format(self.slug)
 
     @property
     def num_likes(self):

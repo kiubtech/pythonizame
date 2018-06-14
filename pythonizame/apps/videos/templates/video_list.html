@@ -1,17 +1,17 @@
 {% extends 'base_video.html' %}
-{% load static %}
-{% block title %} Blog {% endblock title %}
+{% load static thumbnail %}
+{% block title %} Videos {% endblock title %}
 {% block main-swipe %}
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            {% for post in recent_post %}
+            {% for rplaylist in recent_playlist %}
                 <div class="swiper-slide carousel-img" data-swiper-parallax="-23%"
-                     style="background: url('{{ post.main_image_thumbnail }}')">
-                    <a href="{% url 'blog:post_detail' post.slug %}">
+                     style="background: url('{{ rplaylist.cover|thumbnail_url:'main_blog_image' }}')">
+                    <a href="{% url 'videos:playlist-detail' rplaylist.slug %}">
                         <div class="overlay-carousel">
-                            <div class="title" data-swiper-parallax="-100">{{ post.title }}</div>
+                            <div class="title" data-swiper-parallax="-100">{{ rplaylist.title }}</div>
                             <div class="text" data-swiper-parallax="-300">
-                                <p>{{ post.abstract }}</p>
+                                <p>{{ rplaylist.abstract }}</p>
                             </div>
                         </div>
                     </a>
@@ -48,12 +48,11 @@
                     <a href="#">
                     <a href="{% url 'videos:playlist-detail' playlist.slug %}">
                         <div class="widget-user-header bg-black no-padding"
-                             style="background: url({{ post.pin_image_thumbnail }}) center center;">
+                             style="background: url({{ playlist.cover|thumbnail_url:'pin_blog_image' }}) center center;">
                              <div class="overlay" style="position: absolute;padding:20px;height: 120px;width: 100%;background: rgba(0,0,0,0.4)">
-
                                     <h3 class="widget-user-username">{{ playlist.title|capfirst }}</h3>
+                                    <small>{{ playlist.video_set.all.count }} videos</small>
                              </div>
-
                         </div>
                     </a>
                     <div class="box-footer box-footer-post">

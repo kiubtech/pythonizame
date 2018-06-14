@@ -13,6 +13,20 @@ from .functions import video_search
 class IndexView(View):
     template_name = "video_list.html"
 
+    @staticmethod
+    def get_recent_playlist():
+        """
+        Obtenemos las últimas 5 publicaciones
+        :return:
+        """
+        cache_blog_recent_post = cache.get('pythonizame_recent_playlist')
+        if cache_blog_recent_post:
+            queryset = cache_blog_recent_post
+        else:
+            queryset = PlayList.objects.filter(status=1).order_by('-timestamp')[:5]
+            cache.set('pythonizame_recent_playlist', queryset, 60 * 5)
+        return queryset
+
     def get(self, request):
         """
         Devolvemos consulta de publicaciones al usuario
@@ -38,6 +52,7 @@ class IndexView(View):
         ctx = {'object_list': object_list,
                'categories': categories,
                'page_obj': object_list,
+               'recent_playlist': self.get_recent_playlist(),
                'queryset': search_words}
         return render(request, self.template_name, ctx)
 
@@ -64,8 +79,12 @@ class PlayListVideosView(DetailView):
             queryset = VideoCategory.objects.all()
             cache.set('pythonizame_video_categories', queryset, 60 * 5)  # Cache por 15 mins
         context['categories'] = queryset
-        related_posts = PlayList.objects.filter(status=1,
-                                                categories__in=actual_playlist.categories.all()
-                                                ).exclude(id=actual_playlist.id).distinct().order_by('?')[:5]
-        context['related_posts'] = related_posts
+        actual_categories_id = list(actual_playlist.categories.all().values_list('id', flat=True))
+        rel_playlist_id = set(list(PlayList.objects.filter(status=1,
+                                                           categories__in=actual_categories_id).exclude(
+            id=actual_playlist.id).values_list(
+            'id', flat=True
+        )))
+        rel_playlist = PlayList.objects.filter(id__in=rel_playlist_id).order_by('?')[:5]
+        context['related_playlist'] = rel_playlist
         return context
