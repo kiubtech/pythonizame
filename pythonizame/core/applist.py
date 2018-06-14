@@ -23,7 +23,8 @@ LOCAL_APPS = (
     'pythonizame.apps.account',
     'pythonizame.apps.security',
     'pythonizame.apps.books',
-    'pythonizame.apps.jobboard'
+    'pythonizame.apps.jobboard',
+    'pythonizame.apps.videos'
 )
 
 THIRD_PARTY_APPS = (

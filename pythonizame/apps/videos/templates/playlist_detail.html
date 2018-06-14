@@ -1,0 +1,206 @@
+{% extends 'base_video.html' %}
+{% load static thumbnail i18n %}
+{% block title %} {{ playlist.title }}{% endblock title %}
+{% block metas %}
+    <meta name="description" content="{{ post.abstract }}">
+    <meta name="keywords" itemprop="keywords" content="{% for my_tag in post.tags.all %}{{ my_tag }},{% endfor %}">
+    <meta property="og:locale" content="es_MX"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:image" content="{{ playlist.cover|thumbnail_url:'main_blog_image' }}">
+    <meta property="og:title" content="{{ playlist.title }}"/>
+    <meta property="og:description" content="{{ playlist.abstract }}"/>
+    <meta property="og:url" content="{{ playlist.url }}"/>
+    <meta property="og:site_name" content="Pythonízame | {{ playlist.title }}"/>
+{% endblock metas %}
+
+{% block content %}
+    <article class="col-xs-12" id="detail_article">
+        <div id="post_img" style="background: url({{ playlist.cover|thumbnail_url:'main_blog_image' }})">
+            <h1 class="tituloDetail">{{ playlist.title | capfirst }}</h1>
+                <span class="author_image">{{ playlist.video_set.all.count }} {% trans 'Videos' %}</span>
+        </div>
+        <div class="actions-detail col-xs-12 text-right">
+            <span>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ playlist.title }}"
+               data-hashtags="pythonizame">Tweet</a>
+            </span>&nbsp&nbsp
+            <span>
+        <!-- Inserta esta etiqueta donde quieras que aparezca Botón Compartir. -->
+        <div class="g-plus" data-action="share" data-annotation="bubble" data-href="{{ playlist.url }}"></div>
+            </span>
+            <span>{{ playlist.timestamp | date }}</span>&nbsp&nbsp
+            <span class="post_like" data-id="{{ playlist.id }}"> <i
+                    class="{% if i_like %} fa fa-heart postLike {% else %}fa fa-heart-o {% endif %}heart{{ playlist.id }}"></i> <small
+                    class="num_likes{{ playlist.id }}">{{ playlist.num_likes }}</small></span>&nbsp&nbsp
+            <span data-toggle="tooltip" data-placement="bottom" title="Quitar/Agregar de mis favoritos"
+                  class="post_favorite" data-id="{{ playlist.id }}"> <i
+                    class="{% if i_favorite %} fa fa-star postfavorite {% else %}fa fa-star {% endif %}favorite{{ playlist.id }}"></i></span>
+        </div>
+        <div class="hr col-xs-5" style="float: right"></div>
+
+        <div class="post_content col-xs-12">
+{#            <div class="banner_post_detailt" style="margin-bottom: 30px">#}
+{#                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>#}
+{#                <!-- post_detalle1 -->#}
+{#                <ins class="adsbygoogle"#}
+{#                     style="display:block"#}
+{#                     data-ad-client="ca-pub-5267377707713164"#}
+{#                     data-ad-slot="5925055247"#}
+{#                     data-ad-format="auto"></ins>#}
+{#                <script>#}
+{#                    (adsbygoogle = window.adsbygoogle || []).push({});#}
+{#                </script>#}
+{#            </div>#}
+            {{ playlist.description|safe }}
+            <br/><br/>
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tbody>
+                <tr>
+                  <th width="10%"><h4>#</h4></th>
+                  <th width="75%"><h4>Título</h4></th>
+                  <th width="15%"> </th>
+                </tr>
+                {% for video in playlist.video_set.all %}
+                    <tr>
+                        <td><h4>{{ video.order }}</h4></td>
+                        <td>
+                            <h4>{{ video.title }}</h4>
+                            <p>{{ video.description|safe|truncatechars:150 }}</p>
+                        </td>
+                        <td><h4>
+                            <a href="{% url 'videos:video-detail' video.id %}"> <i class="fa fa-play-circle text-danger"></i> {% trans 'Reproducir' %}
+                            </a>
+                        </h4>
+                        </td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+              </table>
+            </div>
+            <br><br>
+            <blockquote>
+                Pythonízame reconoce el gran esfuerzo de los autores de este contenido por
+                compartir sus conocimientos a través de videos que ayudan a que más desarrolladores
+                conozcan el gran potencial del lenguaje de programación Python.
+            </blockquote>
+            <div class="banner_post_detailt">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- Primera página - 3 (pythoniza.me) -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-5267377707713164"
+                     data-ad-slot="9762554440"
+                     data-ad-format="auto"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            <div id="disqus_thread"></div>
+        </div>
+
+    </article>
+{% endblock content %}
+{% block aside_blog %}
+    <div class="col-xs-12 no-padding">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+                {% if playlist.author.userprofile.image %}
+{#                    <a href="{% url 'account:profile' post.author.id %} ">#}
+                        <img
+                            src="{{ playlist.author.userprofile.avatar }}"
+                            class="profile-user-img img-responsive img-circle"
+                            alt=""
+                            height="50px"/>
+{#                    </a>#}
+                {% else %}
+{#                    <a href="{% url 'account:profile' post.author.id %} ">#}
+                        <img src="{% static 'app/img/default.gif' %}"
+                             class="profile-user-img img-responsive img-circle"
+                             alt=""
+                             height="50px"/>
+{#                    </a>#}
+                {% endif %}
+                <h3 class="profile-username text-center">{{ playlist.author.first_name }} {{ playlist.author.last_name }}</h3>
+
+                <p class="text-muted text-center">{{ playlist.author.userprofile.about_me }}</p>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+{#    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">#}
+{#        <div class="box box-danger">#}
+{#            <div class="box-header with-border">#}
+{#                <h3 class="box-title">Etiquetas</h3>#}
+{#            </div>#}
+{#            <!-- /.box-header -->#}
+{#            <div class="box-body">#}
+{#                {% for my_tag in post.tags.all %}#}
+{#                    <small class="fa fa-tag"><a href="{% url 'blog:by_tag' my_tag.slug %}"> {{ my_tag }}</a></small>#}
+{#                {% endfor %}#}
+{#                <!-- /.users-list -->#}
+{#            </div>#}
+{#            <!-- /.box-body -->#}
+{#        </div>#}
+{#    </div>#}
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 no-padding ">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Listas de reproducción similares</h3>
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <ul class="products-list product-list-in-box">
+                    {% for playlist_rel in related_playlist %}
+                        <li class="item">
+                            <div class="product-img">
+                                <img src="{{ playlist_rel.cover|thumbnail_url:'pin_blog_image' }}"
+                                     alt="{{ playlist_rel.title }}">
+                            </div>
+                            <div class="product-info">
+                                <a href="{% url 'videos:playlist-detail' playlist_rel.slug %}"
+                                   class="product-title">{{ playlist_rel.title }}
+                                </a>
+                                <span class="product-description">
+                          Hace {{ playlist_rel.timestamp|timesince }}
+                        </span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+    <div class="col-xs-12 aside-item" style="padding:0;overflow-x:hidden ">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- index_blog -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-5267377707713164"
+             data-ad-slot="7659361247"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+{% endblock aside_blog %}
+{% block scripts %}
+    {% if config.enable_disqus %}
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = '{{ config.disqus_shortname }}';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments
+            powered by Disqus.</a></noscript>
+    {% endif %}
+{% endblock scripts %}
