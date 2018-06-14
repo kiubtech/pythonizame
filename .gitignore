@@ -57,3 +57,4 @@ node_modules
 /pythonizame/settings.json
 log/*.log
 /pythonizame/static/bower_components/
+/static/
