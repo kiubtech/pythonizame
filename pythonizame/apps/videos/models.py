@@ -71,7 +71,7 @@ class Video(models.Model):
     playlist = models.ForeignKey(PlayList, help_text=_("Lista de reproducción al que pertenece el video"))
     title = models.CharField(max_length=500)
     description = RichTextUploadingField(max_length=1000000)
-    url = models.URLField()
+    youtube_id = models.CharField(max_length=500)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
