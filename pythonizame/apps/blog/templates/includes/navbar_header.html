@@ -16,7 +16,7 @@
               <li><a href="/">Blog</a></li>
               <li><a href="{% url 'books:index' %}">Books</a></li>
               <li><a href="{% url 'jobboard:list' %}">Jobs</a></li>
-              <li><a href="{% url 'videos:list' %}">Videos</a></li>
+{#              <li><a href="{% url 'videos:list' %}">Videos</a></li>#}
               {% get_flatpages as flatpages %}
                 {% for page in flatpages %}
                     {% if page.flatpage.status == 1 %}
