@@ -1,5 +1,5 @@
 boto3==1.6.23
-Django==1.11.20
+Django==2.2.24
 django-ckeditor==5.4.0
 django-countries==5.2
 django-solo==1.1.2
